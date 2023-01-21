@@ -19,7 +19,7 @@ public class DriveMecanum extends CommandBase {
    * Creates a new DriveMecanum.
    */
 
-  private MecanumDrivetrain drivetrain;
+  private MecanumDrivetrain driveTrain;
   private Supplier<Double>  x, y, z;
   private Supplier<Rotation2d> r;
 
@@ -27,7 +27,7 @@ public class DriveMecanum extends CommandBase {
    Supplier<Rotation2d> rAngle) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
-    this.drivetrain = drivetrain;
+    this.driveTrain = drivetrain;
     this.x = forward;
     this.y = strafe;
     this.z = zRotation;
@@ -47,13 +47,13 @@ public class DriveMecanum extends CommandBase {
     double zRotation = z.get();
     Rotation2d gyroAngle = r.get();
     
-    drivetrain.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle);
+    driveTrain.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drivetrain.driveCartesian(0.0, 0.0, 0.0, null);	
+    driveTrain.driveCartesian(0.0, 0.0, 0.0, null);	
   }
 
   // Returns true when the command should end.

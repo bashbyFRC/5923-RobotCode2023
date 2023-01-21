@@ -16,13 +16,12 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static class DrivetrainConstants {
-        public static boolean isTankDriveSquared = false;
-        public static boolean doesCheesyDrivePivot = false;
-        public static boolean isArcadeDriveSquared = true;
 
-        public static double rotationDeadband = 0.70;
-        public static double speedDeadband = 0.30;
+    public static class ArmConstants {
+        public static int topSegMotorID = SpeedControllerCanPortConstants.driveTopSegMotor;
+        public static int bottomSegMotorID = SpeedControllerCanPortConstants.driveBottomSegMotor;
+
+        public static double rotationDeadband = 0;
     }
 
     public static class MecanumDrivetrianConstants {
@@ -52,6 +51,10 @@ public final class Constants {
         //right side
         private static int driveFrontRightTalon = 1;
         private static int driveRearRightVictor = 3;
+
+        //intake arm motors
+        private static int driveTopSegMotor = 7;
+        private static int driveBottomSegMotor = 1;
     }
 
     public static final int CONTROLLER_PORT = 1;

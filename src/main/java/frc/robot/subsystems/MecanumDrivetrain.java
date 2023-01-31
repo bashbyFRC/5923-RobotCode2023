@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.MecanumDrivetrianConstants.*;
+import static frc.robot.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -82,9 +82,9 @@ public class MecanumDrivetrain extends SubsystemBase {
 
   // Robot orientated drive I think
   public void driveCartesian(double xSpeed, double ySpeed, double zRotation, Rotation2d gyroAngle){
-    xSpeed = MathUtil.applyDeadband(xSpeed, speedDeadband);
-    ySpeed = MathUtil.applyDeadband(ySpeed, speedDeadband);
-    zRotation = MathUtil.applyDeadband(zRotation, rotationDeadband);
+    xSpeed = MathUtil.applyDeadband(xSpeed, SPEED_DEADBAND);
+    ySpeed = MathUtil.applyDeadband(ySpeed, SPEED_DEADBAND);
+    zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
 
     mDrive.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle);
   }

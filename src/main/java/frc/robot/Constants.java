@@ -17,50 +17,34 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static class ArmConstants {
-        public static int topSegMotorID = SpeedControllerCanPortConstants.driveTopSegMotor;
-        public static int bottomSegMotorID = SpeedControllerCanPortConstants.driveBottomSegMotor;
+    public static double ROTATION_DEADBAND = .25;
+    public static double STRAFING_DEADBAND = .25;  //.75
+    public static double SPEED_DEADBAND = .3;
+    public static double MAX_OUTPUT = .75;
 
-        public static double rotationDeadband = 0;
-    }
+    // Drivetrain motor ID ports
+    public static int FRONT_LEFT_TALON_ID = 7;
+    public static int REAR_LEFT_VICTOR_ID = 9;
 
-    public static class MecanumDrivetrianConstants {
-        //Mecanum ID names
-        public static int leftFrontVictorID = SpeedControllerCanPortConstants.driveFrontLeftVictor;
-        public static int leftRearVictorID = SpeedControllerCanPortConstants.driveRearLeftVictor;
-        
-        public static int rightFrontTalonID = SpeedControllerCanPortConstants.driveFrontRightTalon;
-        public static int rightRearTalonID = SpeedControllerCanPortConstants.driveRearRightTalon;
+    public static int FRONT_RIGHT_TALON_ID = 1;
+    public static int REAR_RIGHT_VICTOR_ID = 3;
 
-        public static double rotationDeadband = .25;
-        public static double strafingDeadband = .25;  //.75
-        public static double speedDeadband = .3;
-        public static double m_maxOutput = .5;
-        public static boolean isTankDriveSquared = false;
-        public static boolean doesCheesyDrivePivot = false;
-        public static boolean isArcadeDriveSquared = true;
+    // Intake arm motor ID ports
+    public static int TOP_SEG_MOTOR_ID = 7;
+    public static int BOTTOM_SEG_MOTOR_ID = 1;
 
-    }
+    public static boolean IS_TANKDRIVE_SQUARED = false;
+    public static boolean DOES_CHEESYDRIVE_PIVOT = false;
+    public static boolean IS_ARCADEDRIVE_SQUARED = true;
 
-    public static class SpeedControllerCanPortConstants {
-        //mecanum drive motor ID ports
-        //left side
-        private static int driveFrontLeftVictor = 9;
-        private static int driveRearLeftVictor = 3;
+    // Joystick buttons
+    public static int INTAKE_GRAB_BUTTON = 1;
+    public static int INTAKE_LIFT_BUTTON = 2;
 
-        //right side
-        private static int driveFrontRightTalon = 7;
-        private static int driveRearRightTalon = 1;
+    // Intake arm PID constants
+    public static double INTAKE_KP = 0;
+    public static double INTAKE_KI = 0;
+    public static double INTAKE_KD = 0;
 
-        //intake arm motors
-        private static int driveTopSegMotor = 5;
-        private static int driveBottomSegMotor = 1;
-    }
-
-    public static final int CONTROLLER_PORT = 1;
-
-    public static final int LEFT_STICK_X = 0;
-    public static final int LEFT_STICK_Y = 1;
-    public static final int RIGHT_STICK_X = 4;
-    public static final int RIGHT_STICK_Y = 5;
+    public static double DESTINATION_POSITION = 0;
 }

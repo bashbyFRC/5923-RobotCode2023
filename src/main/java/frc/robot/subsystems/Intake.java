@@ -1,24 +1,22 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.ArmConstants.*;
+import static frc.robot.Constants.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import edu.wpi.first.math.MathUtil;
 
 //import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 //import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
-public class Arms extends SubsystemBase {
+public class Intake extends SubsystemBase {
     private WPI_TalonSRX topSegMotor;
     private WPI_TalonSRX bottomSegMotor;
 
     private ShuffleboardTab tab;
 
-    public Arms(ShuffleboardTab tab){
-        topSegMotor = new WPI_TalonSRX(topSegMotorID);
-        bottomSegMotor = new WPI_TalonSRX(bottomSegMotorID);
+    public Intake(ShuffleboardTab tab){
+        topSegMotor = new WPI_TalonSRX(TOP_SEG_MOTOR_ID);
+        bottomSegMotor = new WPI_TalonSRX(BOTTOM_SEG_MOTOR_ID);
 
         this.tab = tab;
         configureShuffleboardData();
@@ -32,11 +30,8 @@ public class Arms extends SubsystemBase {
     public void periodic() {
     }
 
-    public void armIntake(double bAngle, double tAngle){
-        bAngle = MathUtil.applyDeadband(bAngle, rotationDeadband);
-        tAngle = MathUtil.applyDeadband(tAngle, rotationDeadband);
-
-        topSegMotor.set(tAngle);
-        bottomSegMotor.set(bAngle);
+    public void armIntake(double topMotorSpeed, double bottomMotorSpeed) {
+        topSegMotor.set(topMotorSpeed);
+        bottomSegMotor.set(bottomMotorSpeed);
     }
 }

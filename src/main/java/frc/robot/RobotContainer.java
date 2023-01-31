@@ -17,7 +17,7 @@ import java.util.Map;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.GenericHID;
-//import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -60,25 +60,27 @@ public class RobotContainer {
   /// SUBSYSTEMS ///
   private final MecanumDrivetrain mecanumDrivetrain = new MecanumDrivetrain(m_tab);
   //private final Drivetrain drivetrain = new Drivetrain(m_tab);
-  private final Arms arms = new Arms(m_tab);
+  //private final Arms arms = new Arms(m_tab);
   private static final AHRS ahrs = new AHRS(SPI.Port.kMXP);
 
 
   /// OI DEVICES ///
   private final XboxController xbox = new XboxController(0);
-  //private final Joystick stick = new Joystick(0);
+  private final Joystick stick = new Joystick(1);
 
 
   /// COMMANDS ///
   private final AutoDriveTimed m_autoDriveTimedForward = new AutoDriveTimed(mecanumDrivetrain,
    0.5, 0.5 , 6.5, ahrs.getRotation2d(), 0.0);
   //private final DriveTank driveTank = new DriveTank(drivetrain, () -> xbox.getLeftY(), () -> xbox.getRightY());
-  //private final DriveMecanum fieldDriveXbox = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(),
-  //    ()-> xbox.getRightX(), ()-> ahrs.getRotation2d());
-  //private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), ()-> stick.getY(),
-  //    ()-> stick.getTwist(), ()-> ahrs.getRotation2d());
 
-  private final IntakeArm miniArm = new IntakeArm(arms, () -> xbox.getRightX(), () -> -xbox.getLeftY());
+  private final DriveMecanum fieldDriveXbox = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> -xbox.getLeftX(),
+      ()-> xbox.getRightX(), ()-> ahrs.getRotation2d());
+
+  private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), ()-> stick.getY(),
+      ()-> stick.getTwist(), ()-> ahrs.getRotation2d());
+
+  //private final IntakeArm miniArm = new IntakeArm(arms, () -> xbox.getRightX(), () -> -xbox.getLeftY());
 
 
   
@@ -96,26 +98,30 @@ public class RobotContainer {
     m_chooser.addOption("Nothing", null);
 
     ShuffleboardLayout drivingStyleLayout = m_tab.getLayout("driving styles", BuiltInLayouts.kList)
-    .withPosition(0, 0).withSize(2, 6)
+    .withPosition(0, 0).withSize(2, 2)
     .withProperties(Map.of("label position", "BOTTOM"));
-    
-    //drivingStyleLayout.add("Joystick Field Drive",
-    //new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveJoystick), mecanumDrivetrain));
-    //drivingStyleLayout.add("Xbox Field Drive",
-    //new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveXbox), mecanumDrivetrain));
-    drivingStyleLayout.add("Gyro Reset",
+
+    drivingStyleLayout.add("Joystick Field Drive",
+    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveJoystick), mecanumDrivetrain));
+
+    drivingStyleLayout.add("Xbox Field Drive",
+    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveXbox), mecanumDrivetrain));
+
+
+    ShuffleboardLayout mecanumSensor = m_tab.getLayout("NavX", BuiltInLayouts.kGrid)
+    .withPosition(2, 0).withSize(1, 3)
+    .withProperties(Map.of("lable psition", "BOTTOM"));
+
+    mecanumSensor.addNumber("Gyro", ()-> ahrs.getAngle()).withWidget(BuiltInWidgets.kDial);
+
+    mecanumSensor.add("Reset",
     new InstantCommand(()-> ahrs.zeroYaw()));
-    drivingStyleLayout.add("Gyro Calibrate",
+
+    mecanumSensor.add("Calibrate",
     new InstantCommand(()-> ahrs.calibrate()));
 
-    ShuffleboardLayout mecanumSensor = m_tab.getLayout("Mecanum Sensors", BuiltInLayouts.kGrid)
-    .withPosition(6, 0).withSize(2, 2)
-    .withProperties(Map.of("lable psition", "BOTTOM"));
-    mecanumSensor.addNumber("Gyro", ()-> ahrs.getAngle())
-    .withPosition(0, 0).withSize(1, 1).withWidget(BuiltInWidgets.kDial);
-
     ShuffleboardLayout controllerLayout = m_tab.getLayout("xbox", BuiltInLayouts.kGrid)
-    .withPosition(3, 0).withSize(2, 6)
+    .withPosition(4, 0).withSize(2, 6)
     .withProperties(Map.of("label position", "BOTTOM"));
     controllerLayout.addNumber("left y", () -> -xbox.getLeftY())
     .withPosition(0, 0).withSize(2, 1).withWidget(BuiltInWidgets.kNumberBar);
@@ -139,8 +145,8 @@ public class RobotContainer {
    * Default commands are ran whenever no other commands are using a specific subsystem.
    */
   private void configureInitialDefaultCommands() {
-    //mecanumDrivetrain.setDefaultCommand(fieldDriveXbox);
-    arms.setDefaultCommand(miniArm);
+    mecanumDrivetrain.setDefaultCommand(fieldDriveXbox);
+    //arms.setDefaultCommand(miniArm);
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by

@@ -22,10 +22,10 @@ public class Drivetrain extends SubsystemBase {
   /**
    * Creates a new Drivetrain.
    */
-  private WPI_TalonSRX m_leftMasterMotor;
+  private WPI_VictorSPX m_leftMasterMotor;
   private WPI_VictorSPX m_leftSlaveMotor;
   private WPI_TalonSRX m_rightMasterMotor;
-  private WPI_VictorSPX m_rightSlaveMotor;
+  private WPI_TalonSRX m_rightSlaveMotor;
   
 
   private DifferentialDrive m_drive;
@@ -33,13 +33,13 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain(ShuffleboardTab tab) {
      //set up drive motors
-    m_leftMasterMotor = new WPI_TalonSRX(leftFrontTalonID);
+    m_leftMasterMotor = new WPI_VictorSPX(leftFrontVictorID);
     m_leftSlaveMotor = new WPI_VictorSPX(leftRearVictorID);
     
     m_leftSlaveMotor.follow(m_leftMasterMotor);
 
     m_rightMasterMotor = new WPI_TalonSRX(rightFrontTalonID);
-    m_rightSlaveMotor = new WPI_VictorSPX(rightRearVictorID);
+    m_rightSlaveMotor = new WPI_TalonSRX(rightRearTalonID);
 
     m_rightMasterMotor.setInverted(true);
     m_rightSlaveMotor.setInverted(true);

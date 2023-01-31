@@ -26,16 +26,16 @@ public final class Constants {
 
     public static class MecanumDrivetrianConstants {
         //Mecanum ID names
-        public static int leftFrontTalonID = SpeedControllerCanPortConstants.driveFrontLeftTalon;
+        public static int leftFrontVictorID = SpeedControllerCanPortConstants.driveFrontLeftVictor;
         public static int leftRearVictorID = SpeedControllerCanPortConstants.driveRearLeftVictor;
         
         public static int rightFrontTalonID = SpeedControllerCanPortConstants.driveFrontRightTalon;
-        public static int rightRearVictorID = SpeedControllerCanPortConstants.driveRearRightVictor;
+        public static int rightRearTalonID = SpeedControllerCanPortConstants.driveRearRightTalon;
 
         public static double rotationDeadband = .25;
         public static double strafingDeadband = .25;  //.75
         public static double speedDeadband = .3;
-        public static double m_maxOutput = .75;
+        public static double m_maxOutput = .5;
         public static boolean isTankDriveSquared = false;
         public static boolean doesCheesyDrivePivot = false;
         public static boolean isArcadeDriveSquared = true;
@@ -45,15 +45,15 @@ public final class Constants {
     public static class SpeedControllerCanPortConstants {
         //mecanum drive motor ID ports
         //left side
-        private static int driveFrontLeftTalon = 7;
-        private static int driveRearLeftVictor = 9;
+        private static int driveFrontLeftVictor = 9;
+        private static int driveRearLeftVictor = 3;
 
         //right side
-        private static int driveFrontRightTalon = 1;
-        private static int driveRearRightVictor = 3;
+        private static int driveFrontRightTalon = 7;
+        private static int driveRearRightTalon = 1;
 
         //intake arm motors
-        private static int driveTopSegMotor = 7;
+        private static int driveTopSegMotor = 5;
         private static int driveBottomSegMotor = 1;
     }
 

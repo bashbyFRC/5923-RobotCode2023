@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.MecanumDrivetrianConstants.*;
+import static frc.robot.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -23,10 +23,10 @@ public class MecanumDrivetrain extends SubsystemBase {
 
   public MecanumDrivetrain(ShuffleboardTab tab) {
     //Mecanum Drive motors
-    frontLeftMotor = new WPI_TalonSRX(leftFrontTalonID);
-    rearLeftMotor = new WPI_VictorSPX(leftRearVictorID);
-    frontRightMotor = new WPI_TalonSRX(rightFrontTalonID);
-    rearRightMotor = new WPI_VictorSPX(rightRearVictorID);
+    frontLeftMotor = new WPI_TalonSRX(FRONT_LEFT_TALON_ID);
+    rearLeftMotor = new WPI_VictorSPX(REAR_LEFT_VICTOR_ID);
+    frontRightMotor = new WPI_TalonSRX(FRONT_RIGHT_TALON_ID);
+    rearRightMotor = new WPI_VictorSPX(REAR_RIGHT_VICTOR_ID);
 
     mDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
@@ -77,9 +77,9 @@ public class MecanumDrivetrain extends SubsystemBase {
 
   // Problem: automatically rotates, does not allow for strafing
   public void driveCartesian(double xSpeed, double ySpeed, double zRotation, Rotation2d gyroAngle){
-    xSpeed = MathUtil.applyDeadband(xSpeed, speedDeadband);
-    ySpeed = MathUtil.applyDeadband(ySpeed, speedDeadband);
-    zRotation = MathUtil.applyDeadband(zRotation, rotationDeadband);
+    xSpeed = MathUtil.applyDeadband(xSpeed, SPEED_DEADBAND);
+    ySpeed = MathUtil.applyDeadband(ySpeed, SPEED_DEADBAND);
+    zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
 
     mDrive.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle);
   }

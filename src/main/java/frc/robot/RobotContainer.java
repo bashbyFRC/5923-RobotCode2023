@@ -15,9 +15,10 @@ package frc.robot;
 import java.util.Map;
 
 import com.kauailabs.navx.frc.AHRS;
+import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj.GenericHID;
-//import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -60,27 +62,26 @@ public class RobotContainer {
   /// SUBSYSTEMS ///
   private final MecanumDrivetrain mecanumDrivetrain = new MecanumDrivetrain(m_tab);
   //private final Drivetrain drivetrain = new Drivetrain(m_tab);
-  private final Arms arms = new Arms(m_tab);
+  private final Intake arms = new Intake(m_tab);
   private static final AHRS ahrs = new AHRS(SPI.Port.kMXP);
 
 
   /// OI DEVICES ///
   private final XboxController xbox = new XboxController(0);
-  //private final Joystick stick = new Joystick(0);
+  private final Joystick stick = new Joystick(1);
 
 
   /// COMMANDS ///
   private final AutoDriveTimed m_autoDriveTimedForward = new AutoDriveTimed(mecanumDrivetrain,
    0.5, 0.5 , 6.5, ahrs.getRotation2d(), 0.0);
   //private final DriveTank driveTank = new DriveTank(drivetrain, () -> xbox.getLeftY(), () -> xbox.getRightY());
-  //private final DriveMecanum fieldDriveXbox = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(),
-  //    ()-> xbox.getRightX(), ()-> ahrs.getRotation2d());
-  //private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), ()-> stick.getY(),
-  //    ()-> stick.getTwist(), ()-> ahrs.getRotation2d());
+  private final DriveMecanum fieldDrive = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftX() + stick.getX(), ()-> xbox.getLeftY() + stick.getY(),
+    ()-> xbox.getRightX() + stick.getTwist(), ()-> ahrs.getRotation2d());
 
-  private final IntakeArm miniArm = new IntakeArm(arms, () -> xbox.getRightX(), () -> -xbox.getLeftY());
+  private final IntakeArm miniArm = new IntakeArm(arms);
 
-
+  /// JOYSTICK BUTTONS ///
+  JoystickButton intakeGrab = new JoystickButton(stick, INTAKE_GRAB_BUTTON);
   
   /// SHUFFLEBOARD METHODS ///
   /**
@@ -139,7 +140,7 @@ public class RobotContainer {
    * Default commands are ran whenever no other commands are using a specific subsystem.
    */
   private void configureInitialDefaultCommands() {
-    //mecanumDrivetrain.setDefaultCommand(fieldDriveXbox);
+    mecanumDrivetrain.setDefaultCommand(fieldDrive);
     arms.setDefaultCommand(miniArm);
   }
   /**

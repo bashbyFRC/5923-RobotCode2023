@@ -9,9 +9,11 @@ public class IntakeArm extends CommandBase {
     private Intake miniArm;
     private Supplier<Double> bottom, top;
 
-    public IntakeArm(Intake arm){
+    public IntakeArm(Intake arm, Supplier<Double> top, Supplier<Double> bottom){
         addRequirements(arm);
         this.miniArm = arm;
+        this.top = top;
+        this.bottom = bottom;
     }
 
     @Override
@@ -20,10 +22,9 @@ public class IntakeArm extends CommandBase {
 
     @Override
     public void execute() {
-        double bottomRotate = bottom.get();
-        double topRotate = top.get();
+        miniArm.armIntake(top.get(), bottom.get());
     }
-    
+
     public void end(boolean interrupted) {
         
     }

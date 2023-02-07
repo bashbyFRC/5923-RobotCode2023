@@ -72,13 +72,13 @@ public class RobotContainer {
 
 
   /// COMMANDS ///
-  private final AutoDriveTimed m_autoDriveTimedForward = new AutoDriveTimed(mecanumDrivetrain,
-   0.5, 0.5 , 6.5, ahrs.getRotation2d(), 0.0);
+  //private final AutoDriveTimed m_autoDriveTimedForward = new AutoDriveTimed(mecanumDrivetrain,
+   //0.5, 0.5 , 6.5, ahrs.getRotation2d(), 0.0);
   //private final DriveTank driveTank = new DriveTank(drivetrain, () -> xbox.getLeftY(), () -> xbox.getRightY());
   private final DriveMecanum fieldDrive = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftX() + stick.getX(), ()-> xbox.getLeftY() + stick.getY(),
     ()-> xbox.getRightX() + stick.getTwist(), ()-> ahrs.getRotation2d());
 
-  private final IntakeArm miniArm = new IntakeArm(arms);
+  private final IntakeArm miniArm = new IntakeArm(arms, () -> xbox.getLeftY(), () -> xbox.getRightY());
 
   /// JOYSTICK BUTTONS ///
   JoystickButton intakeGrab = new JoystickButton(stick, INTAKE_GRAB_BUTTON);
@@ -92,7 +92,7 @@ public class RobotContainer {
   private void configureShuffleboardData() {
     Shuffleboard.selectTab(m_tab.getTitle());
     
-    m_chooser.setDefaultOption("First Course", m_autoDriveTimedForward);
+    //m_chooser.setDefaultOption("First Course", m_autoDriveTimedForward);
     //m_chooser.addOption("Drive Reverse", m_autoDriveTimedReverse);
     m_chooser.addOption("Nothing", null);
 

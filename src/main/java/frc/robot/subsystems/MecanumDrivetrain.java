@@ -15,18 +15,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class MecanumDrivetrain extends SubsystemBase {
-  private WPI_TalonSRX frontLeftMotor, frontRightMotor;
-  private WPI_VictorSPX rearLeftMotor, rearRightMotor;
+  private WPI_TalonSRX frontRightMotor, rearRightMotor;
+  private WPI_VictorSPX rearLeftMotor, frontLeftMotor;
 
   private MecanumDrive mDrive;
   private ShuffleboardTab tab;
 
   public MecanumDrivetrain(ShuffleboardTab tab) {
     //Mecanum Drive motors
-    frontLeftMotor = new WPI_TalonSRX(FRONT_LEFT_TALON_ID);
-    rearLeftMotor = new WPI_VictorSPX(REAR_LEFT_VICTOR_ID);
-    frontRightMotor = new WPI_TalonSRX(FRONT_RIGHT_TALON_ID);
-    rearRightMotor = new WPI_VictorSPX(REAR_RIGHT_VICTOR_ID);
+    frontLeftMotor = new WPI_VictorSPX(leftFrontVictorID);
+    rearLeftMotor = new WPI_VictorSPX(leftRearVictorID);
+    frontRightMotor = new WPI_TalonSRX(rightFrontTalonID);
+    rearRightMotor = new WPI_TalonSRX(rightRearTalonID);
+
+    frontLeftMotor.setInverted(false);
+    rearLeftMotor.setInverted(false);
+    frontRightMotor.setInverted(true);
+    rearRightMotor.setInverted(true);
 
     mDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
@@ -75,7 +80,7 @@ public class MecanumDrivetrain extends SubsystemBase {
   public double getRearLeftEncoderVelocity() { return rearLeftMotor.getSelectedSensorVelocity(); }
   public double getRearRightEncoderVelocity() { return rearRightMotor.getSelectedSensorVelocity(); }
 
-  // Problem: automatically rotates, does not allow for strafing
+  // Robot orientated drive I think
   public void driveCartesian(double xSpeed, double ySpeed, double zRotation, Rotation2d gyroAngle){
     xSpeed = MathUtil.applyDeadband(xSpeed, SPEED_DEADBAND);
     ySpeed = MathUtil.applyDeadband(ySpeed, SPEED_DEADBAND);

@@ -97,26 +97,30 @@ public class RobotContainer {
     m_chooser.addOption("Nothing", null);
 
     ShuffleboardLayout drivingStyleLayout = m_tab.getLayout("driving styles", BuiltInLayouts.kList)
-    .withPosition(0, 0).withSize(2, 6)
+    .withPosition(0, 0).withSize(2, 2)
     .withProperties(Map.of("label position", "BOTTOM"));
-    
-    //drivingStyleLayout.add("Joystick Field Drive",
-    //new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveJoystick), mecanumDrivetrain));
-    //drivingStyleLayout.add("Xbox Field Drive",
-    //new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveXbox), mecanumDrivetrain));
-    drivingStyleLayout.add("Gyro Reset",
+
+    drivingStyleLayout.add("Joystick Field Drive",
+    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveJoystick), mecanumDrivetrain));
+
+    drivingStyleLayout.add("Xbox Field Drive",
+    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveXbox), mecanumDrivetrain));
+
+
+    ShuffleboardLayout mecanumSensor = m_tab.getLayout("NavX", BuiltInLayouts.kGrid)
+    .withPosition(2, 0).withSize(1, 3)
+    .withProperties(Map.of("lable psition", "BOTTOM"));
+
+    mecanumSensor.addNumber("Gyro", ()-> ahrs.getAngle()).withWidget(BuiltInWidgets.kDial);
+
+    mecanumSensor.add("Reset",
     new InstantCommand(()-> ahrs.zeroYaw()));
-    drivingStyleLayout.add("Gyro Calibrate",
+
+    mecanumSensor.add("Calibrate",
     new InstantCommand(()-> ahrs.calibrate()));
 
-    ShuffleboardLayout mecanumSensor = m_tab.getLayout("Mecanum Sensors", BuiltInLayouts.kGrid)
-    .withPosition(6, 0).withSize(2, 2)
-    .withProperties(Map.of("lable psition", "BOTTOM"));
-    mecanumSensor.addNumber("Gyro", ()-> ahrs.getAngle())
-    .withPosition(0, 0).withSize(1, 1).withWidget(BuiltInWidgets.kDial);
-
     ShuffleboardLayout controllerLayout = m_tab.getLayout("xbox", BuiltInLayouts.kGrid)
-    .withPosition(3, 0).withSize(2, 6)
+    .withPosition(4, 0).withSize(2, 6)
     .withProperties(Map.of("label position", "BOTTOM"));
     controllerLayout.addNumber("left y", () -> -xbox.getLeftY())
     .withPosition(0, 0).withSize(2, 1).withWidget(BuiltInWidgets.kNumberBar);

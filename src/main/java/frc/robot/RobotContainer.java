@@ -101,11 +101,7 @@ public class RobotContainer {
     .withProperties(Map.of("label position", "BOTTOM"));
 
     drivingStyleLayout.add("Joystick Field Drive",
-    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveJoystick), mecanumDrivetrain));
-
-    drivingStyleLayout.add("Xbox Field Drive",
-    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveXbox), mecanumDrivetrain));
-
+    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDrive), mecanumDrivetrain));
 
     ShuffleboardLayout mecanumSensor = m_tab.getLayout("NavX", BuiltInLayouts.kGrid)
     .withPosition(2, 0).withSize(1, 3)

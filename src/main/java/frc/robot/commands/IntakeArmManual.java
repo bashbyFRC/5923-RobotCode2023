@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 
-public class IntakeArm extends CommandBase {
+public class IntakeArmManual extends CommandBase {
     private Intake miniArm;
     private Supplier<Double> bottom, top;
 
-    public IntakeArm(Intake arm, Supplier<Double> top, Supplier<Double> bottom){
+    public IntakeArmManual(Intake arm, Supplier<Double> top, Supplier<Double> bottom){
         addRequirements(arm);
         this.miniArm = arm;
         this.top = top;

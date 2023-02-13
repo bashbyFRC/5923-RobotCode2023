@@ -24,10 +24,10 @@ public final class Constants {
 
     // Drivetrain motor ID ports
     public static int FRONT_LEFT_TALON_ID = 7;
-    public static int REAR_LEFT_VICTOR_ID = 9;
+    public static int REAR_LEFT_TALON_ID = 9;
 
     public static int FRONT_RIGHT_TALON_ID = 1;
-    public static int REAR_RIGHT_VICTOR_ID = 3;
+    public static int REAR_RIGHT_TALON_ID = 3;
 
     // Intake arm motor ID ports
     public static int TOP_SEG_MOTOR_ID = 7;

@@ -22,7 +22,7 @@ public class IntakeArmManual extends CommandBase {
 
     @Override
     public void execute() {
-        miniArm.armIntake(top.get(), bottom.get());
+        miniArm.move(top.get(), bottom.get());
     }
 
     public void end(boolean interrupted) {

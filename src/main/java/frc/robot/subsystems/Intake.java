@@ -30,7 +30,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
     }
 
-    public void armIntake(double topMotorSpeed, double bottomMotorSpeed) {
+    public void move(double topMotorSpeed, double bottomMotorSpeed) {
         topSegMotor.set(topMotorSpeed);
         bottomSegMotor.set(bottomMotorSpeed);
     }

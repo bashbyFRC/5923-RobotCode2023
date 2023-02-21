@@ -84,6 +84,9 @@ public class RobotContainer {
   private final DriveMecanum fieldDrivePS4 = new DriveMecanum(mecanumDrivetrain, () -> ps4.getLeftY() + stick.getX(), ()-> -ps4.getLeftX() + stick.getY(),
     ()-> ps4.getRightX() + stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
 
+  private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(),
+   () -> stick.getZ(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
+
   //private final IntakeArm miniArm = new IntakeArm(arms, () -> xbox.getRightY(), () -> -xbox.getLeftX());
 
   /// JOYSTICK BUTTONS ///
@@ -148,7 +151,7 @@ public class RobotContainer {
    * Default commands are ran whenever no other commands are using a specific subsystem.
    */
   private void configureInitialDefaultCommands() {
-    mecanumDrivetrain.setDefaultCommand(fieldDriveDualJoystick);
+    mecanumDrivetrain.setDefaultCommand(fieldDriveJoystick);
     //arms.setDefaultCommand(miniArm);
   }
   /**

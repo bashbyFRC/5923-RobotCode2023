@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -79,10 +78,16 @@ public class RobotContainer {
   //private final AutoDriveTimed m_autoDriveTimedForward = new AutoDriveTimed(mecanumDrivetrain,
    //0.5, 0.5 , 6.5, ahrs.getRotation2d(), 0.0);
   //private final DriveTank driveTank = new DriveTank(drivetrain, () -> xbox.getLeftY(), () -> xbox.getRightY());
-  private final DriveMecanum fieldDriveDualJoystick = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY() + stick.getX(), ()-> -xbox.getLeftX() + stick.getY(),
-    ()-> xbox.getRightX() + stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
-  private final DriveMecanum fieldDrivePS4 = new DriveMecanum(mecanumDrivetrain, () -> ps4.getLeftY() + stick.getX(), ()-> -ps4.getLeftX() + stick.getY(),
-    ()-> ps4.getRightX() + stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
+  private final DriveMecanum fieldDrive = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY() + stick.getY() + ps4.getLeftY(), () -> -xbox.getLeftX() + stick.getX() + ps4.getLeftX() ,
+    () -> xbox.getRightX() + stick.getTwist() + ps4.getRightX(), () -> ahrs.getRotation2d(), () -> ahrs.getAngle());
+  private final DriveMecanum fieldDriveDualJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getY(), ()-> stick.getX(),
+    ()-> stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
+
+  private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(),
+   () -> stick.getZ(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
+
+  private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(),
+   () -> stick.getZ(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
 
   private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(),
    () -> stick.getZ(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
@@ -151,7 +156,7 @@ public class RobotContainer {
    * Default commands are ran whenever no other commands are using a specific subsystem.
    */
   private void configureInitialDefaultCommands() {
-    mecanumDrivetrain.setDefaultCommand(fieldDriveJoystick);
+    mecanumDrivetrain.setDefaultCommand(fieldDrive);
     //arms.setDefaultCommand(miniArm);
   }
   /**
@@ -163,7 +168,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
   }
-  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -172,7 +176,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();
   }
-
   public void displayValues() {
   SmartDashboard.putData(mecanumDrivetrain);
   }

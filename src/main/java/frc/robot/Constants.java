@@ -48,6 +48,7 @@ public final class Constants {
     public static double INTAKE_KD = 0;
 
     public static double DESTINATION_POSITION = 0;
+    public static double MOTOR_SPEED_RATIO = 1;
 
     // Intake arm measurements
     public static double INTAKE_TOP_LENGTH = 24;

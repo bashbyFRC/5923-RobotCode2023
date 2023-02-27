@@ -44,11 +44,12 @@ public class DriveMecanum extends CommandBase {
   @Override
   public void execute() {
     double xSpeed = -x.get();
-    double ySpeed = -y.get();
+    double ySpeed = y.get();
     double zRotation = z.get();
     double theta = angle.get();
     Rotation2d gyroAngle = r.get();
     
+    //driveTrain.driveCartesian(xSpeed, ySpeed, zRotation);
     driveTrain.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle.times(-1));
     //driveTrain.homeBrewMecanum(xSpeed, ySpeed, zRotation, theta);
   }
@@ -56,6 +57,7 @@ public class DriveMecanum extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    //driveTrain.driveCartesian(0, 0, 0);
     driveTrain.driveCartesian(0.0, 0.0, 0.0, r.get());	
     //driveTrain.homeBrewMecanum(0, 0, 0, 0);
   }

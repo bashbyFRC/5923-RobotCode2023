@@ -28,8 +28,8 @@ public class MecanumDrivetrain extends SubsystemBase {
     rearRightMotor = new WPI_TalonSRX(REAR_RIGHT_TALON_ID);
 
     frontLeftMotor.setInverted(false);
-    rearLeftMotor.setInverted(true);
-    frontRightMotor.setInverted(false);
+    rearLeftMotor.setInverted(false);
+    frontRightMotor.setInverted(true);
     rearRightMotor.setInverted(true);
 
     mDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
@@ -88,31 +88,24 @@ public class MecanumDrivetrain extends SubsystemBase {
     mDrive.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle);
   }
 
+  //Bot orientated
+  public void driveCartesian(double xSpeed, double ySpeed, double zRotation){
+    xSpeed = MathUtil.applyDeadband(xSpeed, SPEED_DEADBAND);
+    ySpeed = MathUtil.applyDeadband(ySpeed, SPEED_DEADBAND);
+    zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
+
+    mDrive.driveCartesian(xSpeed, ySpeed, zRotation);
+  }
+
   public void homeBrewMecanum(double xSpeed, double ySpeed, double zRotation, double theta){
     xSpeed = MathUtil.applyDeadband(xSpeed, SPEED_DEADBAND);
     ySpeed = MathUtil.applyDeadband(ySpeed, SPEED_DEADBAND);
     zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
     theta = Math.atan2(ySpeed, xSpeed);
-    
-    double sin = Math.sin(theta - Math.PI/4);
-    double cos = Math.cos(theta - Math.PI/4);
-    double max = Math.max(Math.abs(sin), Math.abs(cos));
-    double power = Math.hypot(xSpeed, ySpeed);
 
-    frontLeftMotor.set(power * cos/max + zRotation);
-    frontRightMotor.set(power * sin/max + zRotation);
-    rearLeftMotor.set( power* sin/max + zRotation);
-    rearRightMotor.set(power * cos/max + zRotation);
-
-    if((power + Math.abs(zRotation)) > 1) {
-      frontLeftMotor.set(power + zRotation);
-      frontRightMotor.set(power + zRotation);
-      rearLeftMotor.set(power + zRotation);
-      rearRightMotor.set(power + zRotation);
+    frontLeftMotor.set(  zRotation);
+    frontRightMotor.set(  zRotation);
+    rearLeftMotor.set(  zRotation);
+    rearRightMotor.set( zRotation);
     }
   }
-
-  public void MecanumPID(){
-    
-  }
-}

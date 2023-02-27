@@ -82,8 +82,12 @@ public class RobotContainer {
   //private final DriveTank driveTank = new DriveTank(drivetrain, () -> xbox.getLeftY(), () -> xbox.getRightY());
   private final DriveMecanum fieldDriveDualJoystick = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY() + stick.getX(), ()-> -xbox.getLeftX() + stick.getY(),
     ()-> xbox.getRightX() + stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
+    
   private final DriveMecanum fieldDrivePS4 = new DriveMecanum(mecanumDrivetrain, () -> ps4.getLeftY() + stick.getX(), ()-> -ps4.getLeftX() + stick.getY(),
     ()-> ps4.getRightX() + stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
+
+    private final DriveMecanum logitech = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(),
+     ()-> xbox.getRightX(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
 
   private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(),
    () -> stick.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
@@ -152,7 +156,7 @@ public class RobotContainer {
    * Default commands are ran whenever no other commands are using a specific subsystem.
    */
   private void configureInitialDefaultCommands() {
-    mecanumDrivetrain.setDefaultCommand(fieldDriveJoystick);
+    mecanumDrivetrain.setDefaultCommand(logitech);
     //arms.setDefaultCommand(miniArm);
   }
   /**

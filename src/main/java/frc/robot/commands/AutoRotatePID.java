@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import static frc.robot.Constants.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -15,7 +16,7 @@ public class AutoRotatePID extends PIDCommand {
   public AutoRotatePID() {
     super(
         // The controller that the command will use
-        new PIDController(0, 0, 0),
+        new PIDController(MECANUM_KP, MECANUM_KI, MECANUM_KP),
         // This should return the measurement
         () -> 0,
         // This should return the setpoint (can also be a constant)

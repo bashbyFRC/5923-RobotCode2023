@@ -27,11 +27,12 @@ public class TopArmManual extends CommandBase {
     public void execute() {
         if(intakeF.get() == true) {
             topArm.topArmIntake(-0.5);
-        } else 
+        }
         if(intakeB.get() == true) {
             topArm.topArmIntake(0.5);
-        } else {
-            topArm.topArmIntake(0);
+        } 
+        if(intakeB.get() != true && intakeF.get() != true) {
+            topArm.topArmIntake(0)
         }
 
         topArm.topArm(-extendIn.get(), extendOut.get());

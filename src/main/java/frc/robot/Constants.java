@@ -65,4 +65,12 @@ public final class Constants {
     // Joystick buttons
     public static int INTAKE_GRAB_BUTTON = 1;
     public static int INTAKE_LIFT_BUTTON = 2;
+
+    // Top arm PID constants
+    public static int ARM_KP = 0;
+    public static int ARM_KI = 0;
+    public static int ARM_KD = 0;
+
+    public static int ARM_IN_SETPOINT = 0;
+    public static int ARM_OUT_SETPOINT = 0;
 }

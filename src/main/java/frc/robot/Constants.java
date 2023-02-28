@@ -18,13 +18,13 @@ package frc.robot;
 public final class Constants {
 
     // Top arm motor ID ports
-    public static double TOP_ARM_VICTOR = 7;
-    public static double TOP_ARM_TALON = 8;
-    public static double TOP_ARM_INTAKE = 9;
+    public static int TOP_ARM_INTAKE = 9;
+    public static int TOP_ARM_TALON = 5;
+    public static int TOP_ARM_VICTOR = 7;
 
     // Intake arm motor ID ports
     public static int TOP_SEG_MOTOR_ID = 6;
-    public static int BOTTOM_SEG_MOTOR_ID = 5;
+    public static int BOTTOM_SEG_MOTOR_ID = 8;
 
     // Drivetrain motor ID ports
     public static int FRONT_LEFT_TALON_ID = 4;

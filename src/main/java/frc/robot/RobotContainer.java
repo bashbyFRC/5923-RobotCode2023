@@ -19,10 +19,10 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS4Controller;
+//import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.SPI;
+//import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -65,32 +65,37 @@ public class RobotContainer {
   /// SUBSYSTEMS ///
   private final MecanumDrivetrain mecanumDrivetrain = new MecanumDrivetrain(m_tab);
   //private final Drivetrain drivetrain = new Drivetrain(m_tab);
-  //private final Intake arms = new Intake(m_tab);
+  private final Intake arms = new Intake(m_tab);
   private static final AHRS ahrs = new AHRS(Port.kUSB);
 
 
   /// OI DEVICES ///
   private final XboxController xbox = new XboxController(0);
   private final Joystick stick = new Joystick(0);
-  private final Joystick stick2 = new Joystick(1);
-  private final PS4Controller ps4 = new PS4Controller(0);
+  //private final Joystick stick2 = new Joystick(1);
+  //private final PS4Controller ps4 = new PS4Controller(0);
 
 
   /// COMMANDS ///
   //private final AutoDriveTimed m_autoDriveTimedForward = new AutoDriveTimed(mecanumDrivetrain,
    //0.5, 0.5 , 6.5, ahrs.getRotation2d(), 0.0);
   //private final DriveTank driveTank = new DriveTank(drivetrain, () -> xbox.getLeftY(), () -> xbox.getRightY());
+
+/*
   private final DriveMecanum fieldDriveDualJoystick = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY() + stick.getX(), ()-> -xbox.getLeftX() + stick.getY(),
     ()-> xbox.getRightX() + stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
     
   private final DriveMecanum fieldDrivePS4 = new DriveMecanum(mecanumDrivetrain, () -> ps4.getLeftY() + stick.getX(), ()-> -ps4.getLeftX() + stick.getY(),
     ()-> ps4.getRightX() + stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
+*/
 
-    private final DriveMecanum logitech = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(),
+  private final DriveMecanum logitech = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(),
      ()-> xbox.getRightX(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
 
   private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(),
    () -> stick.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
+
+  private final TopArmManual intakeManual = new TopArmManual(arms,()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper(), ()-> xbox.getLeftTriggerAxis(), ()-> xbox.getRightTriggerAxis());
 
   //private final IntakeArm miniArm = new IntakeArm(arms, () -> xbox.getRightY(), () -> -xbox.getLeftX());
 
@@ -110,15 +115,17 @@ public class RobotContainer {
     //m_chooser.addOption("Drive Reverse", m_autoDriveTimedReverse);
     m_chooser.addOption("Nothing", null);
 
-    /*
     ShuffleboardLayout drivingStyleLayout = m_tab.getLayout("driving styles", BuiltInLayouts.kList)
     .withPosition(0, 0).withSize(2, 2)
     .withProperties(Map.of("label position", "BOTTOM"));
 
     drivingStyleLayout.add("Joystick Field Drive",
-    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDrive), mecanumDrivetrain));
+    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveJoystick), mecanumDrivetrain));
 
-    */
+    drivingStyleLayout.add("Logitech Field Drive",
+    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(logitech), mecanumDrivetrain));
+
+ 
     ShuffleboardLayout mecanumSensor = m_tab.getLayout("NavX", BuiltInLayouts.kGrid)
     .withPosition(2, 0).withSize(1, 3)
     .withProperties(Map.of("lable psition", "BOTTOM"));
@@ -157,7 +164,7 @@ public class RobotContainer {
    */
   private void configureInitialDefaultCommands() {
     mecanumDrivetrain.setDefaultCommand(logitech);
-    //arms.setDefaultCommand(miniArm);
+    arms.setDefaultCommand(intakeManual);
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by

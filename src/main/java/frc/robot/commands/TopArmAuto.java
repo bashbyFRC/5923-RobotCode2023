@@ -26,8 +26,10 @@ public class TopArmAuto extends CommandBase {
 
     @Override
     public void initialize() {
+        pid.setTolerance(5, 10);
     }
 
+    //bruh 
     @Override
     public void execute() {
         if (fullIn.get()) {
@@ -45,11 +47,11 @@ public class TopArmAuto extends CommandBase {
     }
 
     public void end(boolean interrupted) {
-        
+        topArm.move(0);
     }
 
     @Override
     public boolean isFinished() {
-    return false;
+    return pid.atSetpoint();
     }
 }

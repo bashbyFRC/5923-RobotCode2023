@@ -26,16 +26,16 @@ public class TopArmManual extends CommandBase {
     @Override
     public void execute() {
         if(intakeF.get() == true) {
-            topArm.topArmIntake(-0.5);
+            topArm.move(-0.5);
         }
         if(intakeB.get() == true) {
-            topArm.topArmIntake(0.5);
+            topArm.move(0.5);
         } 
         if(intakeB.get() != true && intakeF.get() != true) {
-            topArm.topArmIntake(0)
+            topArm.move(0);
         }
 
-        topArm.topArm(-extendIn.get(), extendOut.get());
+        topArm.move(-extendIn.get(), extendOut.get());
 
         /* 
         if(extendIn.get() > 0.0){

@@ -5,13 +5,15 @@ import static frc.robot.Constants.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 //import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
 public class Intake extends SubsystemBase {
     private WPI_TalonSRX topSegMotor, bottomSegMotor, topArmTalon;
-    private WPI_VictorSPX topArmIntake, topArmVictor;
+    private WPI_VictorSPX topArmIntakeMotor, topArmVictor;
+    private Encoder encoder = new Encoder(TOP_ENCODER_PORT_1, TOP_ENCODER_PORT_2);
 
     private ShuffleboardTab tab;
 
@@ -20,7 +22,7 @@ public class Intake extends SubsystemBase {
         bottomSegMotor = new WPI_TalonSRX(BOTTOM_SEG_MOTOR_ID);
         topArmTalon = new WPI_TalonSRX(TOP_ARM_TALON);
 
-        topArmIntake = new WPI_VictorSPX(TOP_ARM_INTAKE);
+        topArmIntakeMotor = new WPI_VictorSPX(TOP_ARM_INTAKE);
         topArmVictor = new WPI_VictorSPX(TOP_ARM_VICTOR);
 
         topArmVictor.setInverted(true);
@@ -38,17 +40,22 @@ public class Intake extends SubsystemBase {
     public void periodic() {
     }
 
+    // Lower intake arm
     public void move(double topMotorSpeed, double bottomMotorSpeed) {
         topSegMotor.set(topMotorSpeed);
         bottomSegMotor.set(bottomMotorSpeed);
     }
 
-    public void topArmIntake(double inOut){
-        topArmIntake.set(inOut);
+    public void releaseObject(){
+        topArmIntakeMotor.set(TOP_INTAKE_SPEED);
     }
 
-    public void topArm(double extendIn, double extendOut){
-        topArmTalon.set(extendIn);
-        topArmTalon.set(extendOut);
+    //Upper intake arm
+    public void move(double speed){
+        topArmTalon.set(speed);
+    }
+
+    public double getTopEncoderPosition() {
+        return encoder.getDistance();
     }
 }

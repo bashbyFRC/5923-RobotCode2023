@@ -33,13 +33,17 @@ public final class Constants {
     public static int FRONT_RIGHT_TALON_ID = 3;
     public static int REAR_RIGHT_TALON_ID = 2;
 
+    // Encoder ports
+    public static int TOP_ENCODER_PORT_1 = 0;
+    public static int TOP_ENCODER_PORT_2 = 0;
+
     // Drivetrain multipliers
     public static double ROTATION_DEADBAND = .15;   //.25
     public static double STRAFING_DEADBAND = .15;  //.75
     public static double SPEED_DEADBAND = .15; //.3
     public static double MAX_OUTPUT = .25;
 
-    //Drivetrain logic
+    // Drivetrain logic
     public static boolean IS_TANKDRIVE_SQUARED = false;
     public static boolean DOES_CHEESYDRIVE_PIVOT = false;
     public static boolean IS_ARCADEDRIVE_SQUARED = true;
@@ -62,15 +66,20 @@ public final class Constants {
     public static double INTAKE_BOTTOM_LENGTH = 12;
     public static double TOP_UNITS_PER_METER = 0; 
 
-    // Joystick buttons
-    public static int INTAKE_GRAB_BUTTON = 1;
-    public static int INTAKE_LIFT_BUTTON = 2;
-
     // Top arm PID constants
     public static int ARM_KP = 0;
     public static int ARM_KI = 0;
     public static int ARM_KD = 0;
 
     public static int ARM_IN_SETPOINT = 0;
-    public static int ARM_OUT_SETPOINT = 0;
+    public static int ARM_LOW_SETPOINT = 0;
+    public static int ARM_MID_SETPOINT = 0;
+    public static int ARM_HIGH_SETPOINT = 0;
+
+    // Top arm constants
+    public static int TOP_INTAKE_SPEED = 0;
+
+    // Joystick buttons
+    public static int INTAKE_GRAB_BUTTON = 1;
+    public static int INTAKE_LIFT_BUTTON = 2;
 }

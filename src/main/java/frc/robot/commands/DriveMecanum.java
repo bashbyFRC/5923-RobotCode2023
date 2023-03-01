@@ -20,7 +20,8 @@ public class DriveMecanum extends CommandBase {
    */
 
   private MecanumDrivetrain driveTrain;
-  private Supplier<Double>  x, y, z, angle;
+  private Supplier<Double>  x, y, z;
+  //private Supplier<Double> angle;
   private Supplier<Rotation2d> r;
 
   public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation,
@@ -32,7 +33,7 @@ public class DriveMecanum extends CommandBase {
     this.y = strafe;
     this.z = zRotation;
     this.r = rAngle;
-    this.angle = theta;
+    //this.angle = theta;
   }
 
 // Called when the command is initially scheduled.
@@ -46,7 +47,7 @@ public class DriveMecanum extends CommandBase {
     double xSpeed = -x.get();
     double ySpeed = y.get();
     double zRotation = z.get();
-    double theta = angle.get();
+    //double theta = angle.get();
     Rotation2d gyroAngle = r.get();
     
     //driveTrain.driveCartesian(xSpeed, ySpeed, zRotation);

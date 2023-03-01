@@ -46,7 +46,7 @@ public class Intake extends SubsystemBase {
         bottomSegMotor.set(bottomMotorSpeed);
     }
 
-    public void releaseObject(){
+    public void releaseObject(double speed){
         topArmIntakeMotor.set(TOP_INTAKE_SPEED);
     }
 
@@ -58,4 +58,7 @@ public class Intake extends SubsystemBase {
     public double getTopEncoderPosition() {
         return encoder.getDistance();
     }
+
+    
+    
 }

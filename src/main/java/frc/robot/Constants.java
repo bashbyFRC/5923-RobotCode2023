@@ -67,17 +67,17 @@ public final class Constants {
     public static double TOP_UNITS_PER_METER = 0; 
 
     // Top arm PID constants
-    public static int ARM_KP = 0;
-    public static int ARM_KI = 0;
-    public static int ARM_KD = 0;
+    public static double ARM_KP = 0;
+    public static double ARM_KI = 0;
+    public static double ARM_KD = 0;
 
-    public static int ARM_IN_SETPOINT = 0;
-    public static int ARM_LOW_SETPOINT = 0;
-    public static int ARM_MID_SETPOINT = 0;
-    public static int ARM_HIGH_SETPOINT = 0;
+    public static double ARM_IN_SETPOINT = 0;
+    public static double ARM_LOW_SETPOINT = 0;
+    public static double ARM_MID_SETPOINT = 0;
+    public static double ARM_HIGH_SETPOINT = 0;
 
     // Top arm constants
-    public static int TOP_INTAKE_SPEED = 0;
+    public static double TOP_INTAKE_SPEED = .5;
 
     // Joystick buttons
     public static int INTAKE_GRAB_BUTTON = 1;

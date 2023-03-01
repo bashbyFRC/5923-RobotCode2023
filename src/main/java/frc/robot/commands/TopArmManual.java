@@ -7,16 +7,18 @@ import frc.robot.subsystems.Intake;
 
 public class TopArmManual extends CommandBase {
     private Intake topArm;
-    private Supplier<Double> extendIn, extendOut;
-    private Supplier<Boolean> intakeF, intakeB;
+    private Supplier<Double> retract, extend;
+    private Supplier<Boolean> outtake, intake;
 
-    public TopArmManual(Intake arm, Supplier<Boolean> intakeB, Supplier<Boolean> intakeF, Supplier<Double> extendIn, Supplier<Double> extendOut){
+    public TopArmManual(Intake arm, Supplier<Boolean> intake, Supplier<Boolean> outtake, Supplier<Double> retract, Supplier<Double> extend){
         addRequirements(arm);
         this.topArm = arm;
-        this.intakeF = intakeF;
-        this.intakeB = intakeB;
-        this.extendIn = extendIn;
-        this.extendOut = extendOut;
+        this.outtake = outtake;
+        this.intake = intake;
+        this.retract = retract;
+        this.extend = extend;
+
+        // CONTROLS: (Intake [LB]) - (Outtake [RB]) - (Retract [LT]) - (Extend [RT])
     }
 
     @Override
@@ -25,17 +27,13 @@ public class TopArmManual extends CommandBase {
 
     @Override
     public void execute() {
-        if(intakeF.get() == true) {
-            topArm.topArmIntake(-0.5);
-        }
-        if(intakeB.get() == true) {
-            topArm.topArmIntake(0.5);
-        } 
-        if(intakeB.get() != true && intakeF.get() != true) {
-            topArm.topArmIntake(0)
-        }
+        double armSpeed = extend.get() - retract.get();
 
-        topArm.topArm(-extendIn.get(), extendOut.get());
+        if (outtake.get()) { topArm.releaseObject(-0.5); }
+        else if (intake.get()) { topArm.releaseObject(0.5); } 
+        else { topArm.releaseObject(0); }
+
+        topArm.move(armSpeed);
 
         /* 
         if(extendIn.get() > 0.0){
@@ -49,7 +47,8 @@ public class TopArmManual extends CommandBase {
     }
 
     public void end(boolean interrupted) {
-        
+        topArm.move(0);
+        topArm.releaseObject(0);
     }
 
     @Override

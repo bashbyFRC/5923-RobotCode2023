@@ -35,7 +35,13 @@ public final class Constants {
 
     // Encoder ports
     public static int TOP_ENCODER_PORT_1 = 0;
-    public static int TOP_ENCODER_PORT_2 = 0;
+    public static int TOP_ENCODER_PORT_2 = 1;
+
+    public static int BOTTOM_LEFT_ENCODER_PORT_1 = 2;
+    public static int BOTTOM_LEFT_ENCODER_PORT_2 = 3;
+
+    public static int BOTTOM_RIGHT_ENCODER_PORT_1 = 4;
+    public static int BOTTOM_RIGHT_ENCODER_PORT_2 = 5;
 
     // Drivetrain multipliers
     public static double ROTATION_DEADBAND = .15;   //.25

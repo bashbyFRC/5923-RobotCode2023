@@ -34,16 +34,6 @@ public class TopArmManual extends CommandBase {
         else { topArm.releaseObject(0); }
 
         topArm.move(armSpeed);
-
-        /* 
-        if(extendIn.get() > 0.0){
-            topArm.topArm(1, 0);
-        } else if(extendOut.get() > 0.0){
-            topArm.topArm(0, -1);
-        } else {
-            topArm.topArm(0, 0);
-        }
-        */
     }
 
     public void end(boolean interrupted) {

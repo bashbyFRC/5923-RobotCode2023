@@ -47,7 +47,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void releaseObject(double speed){
-        topArmIntakeMotor.set(TOP_INTAKE_SPEED);
+        topArmIntakeMotor.set(speed);
     }
 
     //Upper intake arm

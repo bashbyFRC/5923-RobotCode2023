@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class Intake extends SubsystemBase {
     private WPI_TalonSRX topSegMotor, bottomSegMotor, topArmTalon;
-    private WPI_VictorSPX topArmIntakeMotor, topArmVictor;
+    private WPI_VictorSPX topArmIntakeMotor, topArmVictor, liftMotor;
     private Encoder encoder = new Encoder(TOP_ENCODER_PORT_1, TOP_ENCODER_PORT_2);
 
     private ShuffleboardTab tab;
@@ -24,6 +24,8 @@ public class Intake extends SubsystemBase {
 
         topArmIntakeMotor = new WPI_VictorSPX(TOP_ARM_INTAKE);
         topArmVictor = new WPI_VictorSPX(TOP_ARM_VICTOR);
+
+        liftMotor = new WPI_VictorSPX(LIFT_MOTOR);
 
         topArmVictor.setInverted(true);
         topArmVictor.follow(topArmTalon);
@@ -59,6 +61,8 @@ public class Intake extends SubsystemBase {
         return encoder.getDistance();
     }
 
-    
-    
+    //lifting mechanism on robot
+    public void lift(double speed){
+        liftMotor.set(speed);
+    }
 }

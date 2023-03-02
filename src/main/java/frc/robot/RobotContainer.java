@@ -20,7 +20,6 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-//import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 //import edu.wpi.first.wpilibj.SPI;
@@ -67,6 +66,7 @@ public class RobotContainer {
   private final MecanumDrivetrain mecanumDrivetrain = new MecanumDrivetrain(m_tab);
   //private final Drivetrain drivetrain = new Drivetrain(m_tab);
   private final Intake arms = new Intake(m_tab);
+  private final Intake liftBot = new Intake(m_tab);
   private static final AHRS ahrs = new AHRS(Port.kUSB);
 
 
@@ -74,20 +74,14 @@ public class RobotContainer {
   private final XboxController xbox = new XboxController(0);
   private final Joystick stick = new Joystick(0);
   //private final Joystick stick2 = new Joystick(1);
-  //private final PS4Controller ps4 = new PS4Controller(0);
 
 
   /// COMMANDS ///
   //private final AutoDriveTimed m_autoDriveTimedForward = new AutoDriveTimed(mecanumDrivetrain,
    //0.5, 0.5 , 6.5, ahrs.getRotation2d(), 0.0);
-  //private final DriveTank driveTank = new DriveTank(drivetrain, () -> xbox.getLeftY(), () -> xbox.getRightY());
-
 /*
   private final DriveMecanum fieldDriveDualJoystick = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY() + stick.getX(), ()-> -xbox.getLeftX() + stick.getY(),
     ()-> xbox.getRightX() + stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
-    
-  private final DriveMecanum fieldDrivePS4 = new DriveMecanum(mecanumDrivetrain, () -> ps4.getLeftY() + stick.getX(), ()-> -ps4.getLeftX() + stick.getY(),
-    ()-> ps4.getRightX() + stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
 */
 
   private final DriveMecanum logitech = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(),
@@ -100,6 +94,7 @@ public class RobotContainer {
 
   //private final IntakeArm miniArm = new IntakeArm(arms, () -> xbox.getRightY(), () -> -xbox.getLeftX());
 
+  private final RobotLift lift = new RobotLift(arms, ()-> xbox.getAButton(), ()-> xbox.getBButton());
   /// JOYSTICK BUTTONS ///
   JoystickButton intakeGrab = new JoystickButton(stick, INTAKE_GRAB_BUTTON);
   
@@ -166,6 +161,7 @@ public class RobotContainer {
   private void configureInitialDefaultCommands() {
     mecanumDrivetrain.setDefaultCommand(logitech);
     arms.setDefaultCommand(intakeManual);
+    liftBot.setDefaultCommand(lift);
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by

@@ -37,14 +37,14 @@ public final class Constants {
     public static int REAR_RIGHT_TALON_ID = 2;
 
     // Encoder ports
-    public static int TOP_ENCODER_PORT_1 = 0;
-    public static int TOP_ENCODER_PORT_2 = 1;
+    public static int TOP_ENCODER_PORT_A = 0;
+    public static int TOP_ENCODER_PORT_B = 1;
 
-    public static int BOTTOM_LEFT_ENCODER_PORT_1 = 2;
-    public static int BOTTOM_LEFT_ENCODER_PORT_2 = 3;
+    public static int BOTTOM_LEFT_ENCODER_PORT_A = 2;
+    public static int BOTTOM_LEFT_ENCODER_PORT_B = 3;
 
-    public static int BOTTOM_RIGHT_ENCODER_PORT_1 = 4;
-    public static int BOTTOM_RIGHT_ENCODER_PORT_2 = 5;
+    public static int BOTTOM_RIGHT_ENCODER_PORT_A = 4;
+    public static int BOTTOM_RIGHT_ENCODER_PORT_B = 5;
 
     // Drivetrain multipliers
     public static double ROTATION_DEADBAND = .15;   //.25
@@ -71,9 +71,7 @@ public final class Constants {
     public static double MOTOR_SPEED_RATIO = 1;
 
     // Intake arm measurements
-    public static double INTAKE_TOP_LENGTH = 24;
-    public static double INTAKE_BOTTOM_LENGTH = 12;
-    public static double TOP_UNITS_PER_METER = 0; 
+    public static double TOP_ARM_DISTANCE_PER_PULSE = 1;
 
     // Top arm PID constants
     public static double ARM_KP = 0;

@@ -79,7 +79,6 @@ public class MecanumDrivetrain extends SubsystemBase {
   public double getRearLeftEncoderVelocity() { return rearLeftMotor.getSelectedSensorVelocity(); }
   public double getRearRightEncoderVelocity() { return rearRightMotor.getSelectedSensorVelocity(); }
 
-  // Robot orientated drive I think
   public void driveCartesian(double xSpeed, double ySpeed, double zRotation, Rotation2d gyroAngle){
     xSpeed = MathUtil.applyDeadband(xSpeed, SPEED_DEADBAND);
     ySpeed = MathUtil.applyDeadband(ySpeed, SPEED_DEADBAND);
@@ -103,9 +102,9 @@ public class MecanumDrivetrain extends SubsystemBase {
     zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
     theta = Math.atan2(ySpeed, xSpeed);
 
-    frontLeftMotor.set(  zRotation);
-    frontRightMotor.set(  zRotation);
-    rearLeftMotor.set(  zRotation);
-    rearRightMotor.set( zRotation);
+    frontLeftMotor.set(zRotation);
+    frontRightMotor.set(zRotation);
+    rearLeftMotor.set(zRotation);
+    rearRightMotor.set(zRotation);
     }
   }

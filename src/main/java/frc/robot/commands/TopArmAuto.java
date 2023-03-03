@@ -11,39 +11,30 @@ import static frc.robot.Constants.*;
 
 public class TopArmAuto extends CommandBase {
     private Intake topArm;
-    private Supplier<Boolean> fullIn, midRung, highRung, low;
+    private Supplier<Boolean> downPos, upPos;
     private PIDController pid;
+    private double[] setpoints = {ARM_IN_SETPOINT, ARM_LOW_SETPOINT, ARM_MID_SETPOINT, ARM_HIGH_SETPOINT};
+    private int currentSetpoint;
 
-    public TopArmAuto(Intake arm, Supplier<Encoder> topEncoder, Supplier<Boolean> fullIn, Supplier<Boolean> midRung, Supplier<Boolean> topRung, Supplier<Boolean> low){
+    public TopArmAuto(Intake arm, Supplier<Encoder> topEncoder, Supplier<Boolean> downPos, Supplier<Boolean> upPos){
         addRequirements(arm);
         this.topArm = arm;
-        this.fullIn = fullIn;
-        this.midRung = midRung;
-        this.highRung = topRung;
-        this.low = low;
+        this.downPos = downPos;
+        this.upPos = upPos;
         this.pid = new PIDController(ARM_KP, ARM_KI, ARM_KD);
     }
 
     @Override
     public void initialize() {
         pid.setTolerance(5, 10);
+        currentSetpoint = 0;
     }
 
-    //bruh 
     @Override
     public void execute() {
-        if (fullIn.get()) {
-            topArm.move(pid.calculate(topArm.getTopEncoderPosition(), ARM_IN_SETPOINT));
-        }
-        else if (low.get()) {
-            topArm.move(pid.calculate(topArm.getTopEncoderPosition(), ARM_LOW_SETPOINT));
-        }
-        else if (midRung.get()) {
-            topArm.move(pid.calculate(topArm.getTopEncoderPosition(), ARM_MID_SETPOINT));
-        }
-        else if (highRung.get()) {
-            topArm.move(pid.calculate(topArm.getTopEncoderPosition(), ARM_HIGH_SETPOINT));
-        }
+        if (downPos.get() && currentSetpoint > 0) { currentSetpoint--; }
+        if (upPos.get() && currentSetpoint < setpoints.length - 1) { currentSetpoint++; }
+        topArm.move(pid.calculate(topArm.getTopEncoderPosition(), setpoints[currentSetpoint]));
     }
 
     public void end(boolean interrupted) {

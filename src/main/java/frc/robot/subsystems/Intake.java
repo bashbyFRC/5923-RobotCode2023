@@ -6,14 +6,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 //import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-//import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
 public class Intake extends SubsystemBase {
     private WPI_TalonSRX topSegMotor, bottomSegMotor, topArmTalon;
     private WPI_VictorSPX topArmIntakeMotor, topArmVictor, liftMotor;
-    private Encoder encoder = new Encoder(TOP_ENCODER_PORT_1, TOP_ENCODER_PORT_2);
+    private Encoder topEncoder = new Encoder(TOP_ENCODER_PORT_A, TOP_ENCODER_PORT_B);
 
     private ShuffleboardTab tab;
 
@@ -32,10 +33,15 @@ public class Intake extends SubsystemBase {
 
         this.tab = tab;
         configureShuffleboardData();
+
+        //topEncoder.setDistancePerPulse(TOP_ARM_DISTANCE_PER_PULSE);
     }
 
     private void configureShuffleboardData() {
-        tab.add(this);
+        ShuffleboardLayout layout = tab.getLayout("Intake Data", BuiltInLayouts.kGrid).withPosition(0, 3);
+        layout.add(this);
+        
+        layout.addNumber("Top Arm Encoder", () -> topEncoder.getDistance());
     }
 
     @Override
@@ -58,7 +64,7 @@ public class Intake extends SubsystemBase {
     }
 
     public double getTopEncoderPosition() {
-        return encoder.getDistance();
+        return topEncoder.getDistance();
     }
 
     //lifting mechanism on robot

@@ -19,16 +19,14 @@ public class DriveMecanum extends CommandBase {
    * Creates a new DriveMecanum.
    */
 
-  private MecanumDrivetrain driveTrain;
+  private MecanumDrivetrain drivetrain;
   private Supplier<Double>  x, y, z;
   //private Supplier<Double> angle;
   private Supplier<Rotation2d> r;
 
-  public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation,
-   Supplier<Rotation2d> rAngle, Supplier<Double> theta) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle, Supplier<Double> theta) {
     addRequirements(drivetrain);
-    this.driveTrain = drivetrain;
+    this.drivetrain = drivetrain;
     this.x = forward;
     this.y = strafe;
     this.z = zRotation;
@@ -50,17 +48,17 @@ public class DriveMecanum extends CommandBase {
     //double theta = angle.get();
     Rotation2d gyroAngle = r.get();
     
-    //driveTrain.driveCartesian(xSpeed, ySpeed, zRotation);
-    driveTrain.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle.times(-1));
-    //driveTrain.homeBrewMecanum(xSpeed, ySpeed, zRotation, theta);
+    //drivetrain.driveCartesian(xSpeed, ySpeed, zRotation);
+    drivetrain.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle.times(-1));
+    //drivetrain.homeBrewMecanum(xSpeed, ySpeed, zRotation, theta);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //driveTrain.driveCartesian(0, 0, 0);
-    driveTrain.driveCartesian(0.0, 0.0, 0.0, r.get());	
-    //driveTrain.homeBrewMecanum(0, 0, 0, 0);
+    //drivetrain.driveCartesian(0, 0, 0);
+    drivetrain.driveCartesian(0.0, 0.0, 0.0, r.get());
+    //drivetrain.homeBrewMecanum(0, 0, 0, 0);
   }
 
   // Returns true when the command should end.

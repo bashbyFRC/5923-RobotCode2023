@@ -161,7 +161,7 @@ public class RobotContainer {
   private void configureInitialDefaultCommands() {
     mecanumDrivetrain.setDefaultCommand(logitech);
     arms.setDefaultCommand(intakeManual);
-    liftBot.setDefaultCommand(lift);
+    //liftBot.setDefaultCommand(lift);
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by

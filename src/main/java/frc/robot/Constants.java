@@ -21,9 +21,9 @@ public final class Constants {
     public static int LIFT_MOTOR = 10;
     
     // Top arm motor ID ports
-    public static int TOP_ARM_INTAKE = 9;
+    public static int TOP_ARM_INTAKE = 7;
     public static int TOP_ARM_TALON = 5;
-    public static int TOP_ARM_VICTOR = 7;
+    public static int TOP_ARM_VICTOR = 9;
 
     // Intake arm motor ID ports
     public static int TOP_SEG_MOTOR_ID = 6;
@@ -31,10 +31,10 @@ public final class Constants {
 
     // Drivetrain motor ID ports
     public static int FRONT_LEFT_TALON_ID = 4;
-    public static int REAR_LEFT_TALON_ID = 1;
+    public static int BACK_LEFT_TALON_ID = 1;
 
     public static int FRONT_RIGHT_TALON_ID = 3;
-    public static int REAR_RIGHT_TALON_ID = 2;
+    public static int BACK_RIGHT_TALON_ID = 2;
 
     // Encoder ports
     public static int TOP_ENCODER_PORT_A = 0;

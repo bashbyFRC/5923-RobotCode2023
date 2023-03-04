@@ -33,12 +33,12 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain(ShuffleboardTab tab) {
      //set up drive motors
     leftMasterMotor = new WPI_TalonSRX(FRONT_LEFT_TALON_ID);
-    leftSlaveMotor = new WPI_TalonSRX(REAR_LEFT_TALON_ID);
+    leftSlaveMotor = new WPI_TalonSRX(BACK_LEFT_TALON_ID);
     
     leftSlaveMotor.follow(leftMasterMotor);
 
     rightMasterMotor = new WPI_TalonSRX(FRONT_RIGHT_TALON_ID);
-    rightSlaveMotor = new WPI_TalonSRX(REAR_RIGHT_TALON_ID);
+    rightSlaveMotor = new WPI_TalonSRX(BACK_RIGHT_TALON_ID);
 
     rightMasterMotor.setInverted(true);
     rightSlaveMotor.setInverted(true);

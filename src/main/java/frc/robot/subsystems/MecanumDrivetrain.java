@@ -23,9 +23,9 @@ public class MecanumDrivetrain extends SubsystemBase {
   public MecanumDrivetrain(ShuffleboardTab tab) {
     //Mecanum Drive motors
     frontLeftMotor = new WPI_TalonSRX(FRONT_LEFT_TALON_ID);
-    rearLeftMotor = new WPI_TalonSRX(REAR_LEFT_TALON_ID);
+    rearLeftMotor = new WPI_TalonSRX(BACK_LEFT_TALON_ID);
     frontRightMotor = new WPI_TalonSRX(FRONT_RIGHT_TALON_ID);
-    rearRightMotor = new WPI_TalonSRX(REAR_RIGHT_TALON_ID);
+    rearRightMotor = new WPI_TalonSRX(BACK_RIGHT_TALON_ID);
 
     frontLeftMotor.setInverted(false);
     rearLeftMotor.setInverted(false);

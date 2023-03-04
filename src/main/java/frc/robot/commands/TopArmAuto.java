@@ -34,7 +34,7 @@ public class TopArmAuto extends CommandBase {
     public void execute() {
         if (downPos.get() && currentSetpoint > 0) { currentSetpoint--; }
         if (upPos.get() && currentSetpoint < setpoints.length - 1) { currentSetpoint++; }
-        topArm.move(pid.calculate(topArm.getTopEncoderPosition(), setpoints[currentSetpoint]));
+        //topArm.move(pid.calculate(topArm.getTopEncoderPosition(), setpoints[currentSetpoint]));
     }
 
     public void end(boolean interrupted) {

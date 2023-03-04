@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 public class Intake extends SubsystemBase {
     private WPI_TalonSRX topSegMotor, bottomSegMotor, topArmTalon;
     private WPI_VictorSPX topArmIntakeMotor, topArmVictor, liftMotor;
-    private Encoder topEncoder = new Encoder(TOP_ENCODER_PORT_A, TOP_ENCODER_PORT_B);
+    //private Encoder topEncoder = new Encoder(TOP_ENCODER_PORT_A, TOP_ENCODER_PORT_B, false);
 
     private ShuffleboardTab tab;
 
@@ -32,17 +32,19 @@ public class Intake extends SubsystemBase {
         topArmVictor.follow(topArmTalon);
 
         this.tab = tab;
-        configureShuffleboardData();
+        //configureShuffleboardData();
 
         //topEncoder.setDistancePerPulse(TOP_ARM_DISTANCE_PER_PULSE);
     }
 
+    /*
     private void configureShuffleboardData() {
         ShuffleboardLayout layout = tab.getLayout("Intake Data", BuiltInLayouts.kGrid).withPosition(0, 3);
         layout.add(this);
         
-        layout.addNumber("Top Arm Encoder", () -> topEncoder.getDistance());
+        //layout.addNumber("Top Arm Encoder", () -> topEncoder.getDistance());
     }
+    */
 
     @Override
     public void periodic() {
@@ -63,10 +65,12 @@ public class Intake extends SubsystemBase {
         topArmTalon.set(speed);
     }
 
+    /*
     public double getTopEncoderPosition() {
         return topEncoder.getDistance();
     }
-
+    */
+    
     //lifting mechanism on robot
     public void lift(double speed){
         liftMotor.set(speed);

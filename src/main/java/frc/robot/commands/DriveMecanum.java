@@ -24,7 +24,8 @@ public class DriveMecanum extends CommandBase {
   //private Supplier<Double> angle;
   private Supplier<Rotation2d> r;
 
-  public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle, Supplier<Double> theta) {
+  public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle,
+  Supplier<Double> theta) {
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
     this.x = forward;

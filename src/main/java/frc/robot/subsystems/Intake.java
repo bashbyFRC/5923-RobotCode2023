@@ -5,6 +5,7 @@ import static frc.robot.Constants.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 //import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -14,7 +15,9 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 public class Intake extends SubsystemBase {
     private WPI_TalonSRX topSegMotor, bottomSegMotor, topArmTalon;
     private WPI_VictorSPX topArmIntakeMotor, topArmVictor, liftMotor;
-    //private Encoder topEncoder = new Encoder(TOP_ENCODER_PORT_A, TOP_ENCODER_PORT_B, false);
+    private DigitalInput topChannelA = new DigitalInput(TOP_ENCODER_PORT_A);
+    private DigitalInput topChannelB = new DigitalInput(TOP_ENCODER_PORT_B);
+    private Encoder topEncoder = new Encoder(topChannelA, topChannelB);
 
     private ShuffleboardTab tab;
 
@@ -32,19 +35,19 @@ public class Intake extends SubsystemBase {
         topArmVictor.follow(topArmTalon);
 
         this.tab = tab;
-        //configureShuffleboardData();
+        configureShuffleboardData();
 
-        //topEncoder.setDistancePerPulse(TOP_ARM_DISTANCE_PER_PULSE);
+        topEncoder.setDistancePerPulse(TOP_ARM_DISTANCE_PER_PULSE/256.);
+        topEncoder.setMinRate(0.1);
+        
     }
 
-    /*
     private void configureShuffleboardData() {
         ShuffleboardLayout layout = tab.getLayout("Intake Data", BuiltInLayouts.kGrid).withPosition(0, 3);
         layout.add(this);
         
-        //layout.addNumber("Top Arm Encoder", () -> topEncoder.getDistance());
+        layout.addNumber("Top Arm Encoder", () -> getTopEncoderPosition());
     }
-    */
 
     @Override
     public void periodic() {
@@ -65,11 +68,9 @@ public class Intake extends SubsystemBase {
         topArmTalon.set(speed);
     }
 
-    /*
     public double getTopEncoderPosition() {
         return topEncoder.getDistance();
     }
-    */
     
     //lifting mechanism on robot
     public void lift(double speed){

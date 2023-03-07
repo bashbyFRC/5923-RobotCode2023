@@ -25,7 +25,7 @@ public class RobotLift extends CommandBase {
 
         if(up.get()) {lift.lift(.5); }
         if(down.get()) {lift.lift(-.5); }
-        if(up.get() == false && down.get() == false){ lift.lift(0.0); }
+        if(up.get() == false && down.get() == false) { lift.lift(0.0); }
     }
 
     public void end(boolean interrupted) {

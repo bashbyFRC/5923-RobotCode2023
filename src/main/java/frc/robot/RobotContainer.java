@@ -66,7 +66,7 @@ public class RobotContainer {
   private final MecanumDrivetrain mecanumDrivetrain = new MecanumDrivetrain(m_tab);
   //private final Drivetrain drivetrain = new Drivetrain(m_tab);
   private final Intake arms = new Intake(m_tab);
-  private final Intake liftBot = new Intake(m_tab);
+  //private final Intake liftBot = new Intake(m_tab);
   private static final AHRS ahrs = new AHRS(Port.kUSB);
 
 

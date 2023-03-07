@@ -18,12 +18,12 @@ package frc.robot;
 public final class Constants {
 
     //lift motor
-    public static int LIFT_MOTOR = 10;
+    public static int LIFT_MOTOR = 8;
     
     // Top arm motor ID ports
-    public static int TOP_ARM_INTAKE = 7;
+    public static int TOP_ARM_INTAKE = 9;
     public static int TOP_ARM_TALON = 5;
-    public static int TOP_ARM_VICTOR = 9;
+    public static int TOP_ARM_VICTOR = 7;
 
     // Intake arm motor ID ports
     public static int TOP_SEG_MOTOR_ID = 6;
@@ -50,7 +50,7 @@ public final class Constants {
     public static double ROTATION_DEADBAND = .15;   //.25
     public static double STRAFING_DEADBAND = .15;  //.75
     public static double SPEED_DEADBAND = .15; //.3
-    public static double MAX_OUTPUT = .25;
+    public static double MAX_OUTPUT = .75;
 
     // Drivetrain logic
     public static boolean IS_TANKDRIVE_SQUARED = false;
@@ -61,6 +61,9 @@ public final class Constants {
     public static int MECANUM_KP = 0;
     public static int MECANUM_KI = 0;
     public static int MECANUM_KD = 0;
+
+    // Bottom arm constants
+    public static double BOTTOM_ARM_SPEED = 0.5;
 
     // Intake arm PID constants
     public static double INTAKE_KP = 0;

@@ -29,11 +29,11 @@ public class TopArmManual extends CommandBase {
     public void execute() {
         double armSpeed = extend.get() - retract.get();
 
-        if (outtake.get()) { topArm.releaseObject(-0.5); }
-        else if (intake.get()) { topArm.releaseObject(0.5); } 
+        if (outtake.get()) { topArm.releaseObject(-0.75); }
+        else if (intake.get()) { topArm.releaseObject(0.75); } 
         else { topArm.releaseObject(0); }
 
-        topArm.move(armSpeed);
+        topArm.move(armSpeed * .5);
     }
 
     public void end(boolean interrupted) {

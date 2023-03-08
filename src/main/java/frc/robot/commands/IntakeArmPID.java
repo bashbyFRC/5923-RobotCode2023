@@ -7,7 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TopArm;
 
 import static frc.robot.Constants.*;
 
@@ -17,7 +17,7 @@ import static frc.robot.Constants.*;
 public class IntakeArmPID extends PIDCommand {
   
   /** Creates a new IntakeArmPID. */
-  public IntakeArmPID(Intake intake, Encoder encoderMain, double setpoint) {
+  public IntakeArmPID(TopArm intake, Encoder encoderMain, double setpoint) {
     super(
         // The controller that the command will use
         new PIDController(INTAKE_KP, INTAKE_KI, INTAKE_KD),

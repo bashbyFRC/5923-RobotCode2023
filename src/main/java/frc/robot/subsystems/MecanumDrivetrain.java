@@ -87,7 +87,7 @@ public class MecanumDrivetrain extends SubsystemBase {
     mDrive.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle);
   }
 
-  //Bot orientated
+  //Bot-oriented
   public void driveCartesian(double xSpeed, double ySpeed, double zRotation){
     xSpeed = MathUtil.applyDeadband(xSpeed, SPEED_DEADBAND);
     ySpeed = MathUtil.applyDeadband(ySpeed, SPEED_DEADBAND);

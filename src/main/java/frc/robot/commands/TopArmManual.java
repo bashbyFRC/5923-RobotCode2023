@@ -2,15 +2,15 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TopArm;
 
 
 public class TopArmManual extends CommandBase {
-    private Intake topArm;
+    private TopArm topArm;
     private Supplier<Double> retract, extend;
     private Supplier<Boolean> outtake, intake;
 
-    public TopArmManual(Intake arm, Supplier<Boolean> intake, Supplier<Boolean> outtake, Supplier<Double> retract, Supplier<Double> extend){
+    public TopArmManual(TopArm arm, Supplier<Boolean> intake, Supplier<Boolean> outtake, Supplier<Double> retract, Supplier<Double> extend){
         addRequirements(arm);
         this.topArm = arm;
         this.outtake = outtake;

@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
-public class Intake extends SubsystemBase {
+public class TopArm extends SubsystemBase {
     private WPI_TalonSRX topSegMotor, bottomSegMotor, topArmTalon;
     private WPI_VictorSPX topArmIntakeMotor, topArmVictor, liftMotor;
     private DigitalInput topChannelA = new DigitalInput(TOP_ENCODER_PORT_A);
@@ -22,7 +22,7 @@ public class Intake extends SubsystemBase {
 
     private ShuffleboardTab tab;
 
-    public Intake(ShuffleboardTab tab){
+    public TopArm(ShuffleboardTab tab){
         topSegMotor = new WPI_TalonSRX(TOP_SEG_MOTOR_ID);
         bottomSegMotor = new WPI_TalonSRX(BOTTOM_SEG_MOTOR_ID);
         topArmTalon = new WPI_TalonSRX(TOP_ARM_TALON);

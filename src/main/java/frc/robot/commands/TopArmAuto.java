@@ -5,18 +5,18 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TopArm;
 import static frc.robot.Constants.*;
 
 
 public class TopArmAuto extends CommandBase {
-    private Intake topArm;
+    private TopArm topArm;
     private Supplier<Boolean> downPos, upPos;
     private double[] setpoints = {ARM_IN_SETPOINT, ARM_LOW_SETPOINT, ARM_MID_SETPOINT, ARM_HIGH_SETPOINT};
     private int currentSetpoint;
     private double motorSpeed, error, errorIntegral, dt, previousError, errorDerivative, previousTimestamp;
 
-    public TopArmAuto(Intake arm, Supplier<Encoder> topEncoder, Supplier<Boolean> downPos, Supplier<Boolean> upPos){
+    public TopArmAuto(TopArm arm, Supplier<Encoder> topEncoder, Supplier<Boolean> downPos, Supplier<Boolean> upPos){
         addRequirements(arm);
         this.topArm = arm;
         this.downPos = downPos;

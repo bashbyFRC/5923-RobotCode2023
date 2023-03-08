@@ -4,11 +4,17 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class BottomArmManual extends SubsystemBase {
-  /** Creates a new BottomArmManual. */
-  public BottomArmManual() {}
+public class BottomArm extends SubsystemBase {
+  WPI_TalonSRX topSegMotor, bottomSegMotor;
+
+  /** Creates a new BottomArm. */
+  public BottomArm() {
+    
+  }
 
   @Override
   public void periodic() {

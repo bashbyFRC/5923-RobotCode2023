@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -8,16 +9,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-//import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
 public class Intake extends SubsystemBase {
     private WPI_TalonSRX topSegMotor, bottomSegMotor, topArmTalon;
     private WPI_VictorSPX topArmIntakeMotor, topArmVictor, liftMotor;
-    private DigitalInput topChannelA = new DigitalInput(TOP_ENCODER_PORT_A);
-    private DigitalInput topChannelB = new DigitalInput(TOP_ENCODER_PORT_B);
-    private Encoder topEncoder = new Encoder(topChannelA, topChannelB);
+    private Encoder topEncoder = new Encoder(TOP_ENCODER_PORT_A, TOP_ENCODER_PORT_B, true);
 
     private ShuffleboardTab tab;
 
@@ -39,14 +37,14 @@ public class Intake extends SubsystemBase {
 
         topEncoder.setDistancePerPulse(TOP_ARM_DISTANCE_PER_PULSE/256.);
         topEncoder.setMinRate(0.1);
-        
     }
 
     private void configureShuffleboardData() {
-        ShuffleboardLayout layout = tab.getLayout("Intake Data", BuiltInLayouts.kGrid).withPosition(0, 3);
+        ShuffleboardLayout layout = tab.getLayout("Top arm encoder", BuiltInLayouts.kGrid).withPosition(0, 3).withSize(1,1);
         layout.add(this);
-        
+
         layout.addNumber("Top Arm Encoder", () -> getTopEncoderPosition());
+        layout.add("Reset encoder", new InstantCommand(() -> topEncoder.reset()));
     }
 
     @Override
@@ -69,7 +67,7 @@ public class Intake extends SubsystemBase {
     }
 
     public double getTopEncoderPosition() {
-        return topEncoder.getDistance();
+        return topEncoder.get();
     }
     
     //lifting mechanism on robot

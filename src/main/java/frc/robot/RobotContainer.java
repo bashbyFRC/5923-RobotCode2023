@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.SerialPort.Port;
-//import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -92,8 +91,6 @@ public class RobotContainer {
 
   private final TopArmManual intakeManual = new TopArmManual(arms, ()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper(), ()-> xbox.getLeftTriggerAxis(), ()-> xbox.getRightTriggerAxis());
 
-  //private final IntakeArm miniArm = new IntakeArm(arms, () -> xbox.getRightY(), () -> -xbox.getLeftX());
-
   private final RobotLift lift = new RobotLift(arms, ()-> xbox.getAButton(), ()-> xbox.getBButton());
   /// JOYSTICK BUTTONS ///
   JoystickButton intakeGrab = new JoystickButton(stick, INTAKE_GRAB_BUTTON);
@@ -124,7 +121,7 @@ public class RobotContainer {
  
     ShuffleboardLayout mecanumSensor = m_tab.getLayout("NavX", BuiltInLayouts.kGrid)
     .withPosition(2, 0).withSize(1, 3)
-    .withProperties(Map.of("lable psition", "BOTTOM"));
+    .withProperties(Map.of("label position", "BOTTOM"));
 
     mecanumSensor.addNumber("Gyro", ()-> ahrs.getAngle()).withWidget(BuiltInWidgets.kDial);
 

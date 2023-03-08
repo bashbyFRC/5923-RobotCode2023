@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
@@ -15,7 +16,9 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 public class Intake extends SubsystemBase {
     private WPI_TalonSRX topSegMotor, bottomSegMotor, topArmTalon;
     private WPI_VictorSPX topArmIntakeMotor, topArmVictor, liftMotor;
-    private Encoder topEncoder = new Encoder(TOP_ENCODER_PORT_A, TOP_ENCODER_PORT_B, true);
+    private DigitalInput topChannelA = new DigitalInput(TOP_ENCODER_PORT_A);
+    private DigitalInput topChannelB = new DigitalInput(TOP_ENCODER_PORT_B);
+    private Encoder topEncoder = new Encoder(topChannelA, topChannelB, true, EncodingType.k4X);
 
     private ShuffleboardTab tab;
 

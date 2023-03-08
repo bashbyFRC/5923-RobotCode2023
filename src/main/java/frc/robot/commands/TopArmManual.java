@@ -33,7 +33,7 @@ public class TopArmManual extends CommandBase {
         else if (intake.get()) { topArm.releaseObject(0.75); } 
         else { topArm.releaseObject(0); }
 
-        topArm.move(armSpeed * 1);
+        topArm.move(armSpeed);
     }
 
     public void end(boolean interrupted) {

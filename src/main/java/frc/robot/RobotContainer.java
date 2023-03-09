@@ -66,6 +66,7 @@ public class RobotContainer {
   //private final Drivetrain drivetrain = new Drivetrain(m_tab);
   private final TopArm topArm = new TopArm(m_tab);
   private final BottomArm bottomArm = new BottomArm(m_tab);
+  private final ScissorLift scissorLift = new ScissorLift(m_tab);
 
 
   /// OI DEVICES / HARDWARE ///
@@ -92,7 +93,7 @@ public class RobotContainer {
   private final TopArmManual topArmManual = new TopArmManual(topArm, ()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper(), ()-> xbox.getLeftTriggerAxis(), ()-> xbox.getRightTriggerAxis());
   //private final BottomArmManual bottomArmManual = new BottomArmManual(bottomArm, () -> 0, () -> 0);
 
-  //private final RobotLift lift = new RobotLift(topArm, ()-> xbox.getAButton(), ()-> xbox.getBButton());
+  private final RobotLift lift = new RobotLift(scissorLift, ()-> xbox.getAButton(), ()-> xbox.getBButton());
   /// JOYSTICK BUTTONS ///
   JoystickButton intakeGrab = new JoystickButton(stick, INTAKE_GRAB_BUTTON);
   

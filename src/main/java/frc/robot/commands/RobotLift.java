@@ -2,14 +2,14 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.TopArm;
+import frc.robot.subsystems.ScissorLift;
 
 
 public class RobotLift extends CommandBase {
-    private TopArm lift;
+    private ScissorLift lift;
     private Supplier<Boolean> up, down;
 
-    public RobotLift(TopArm arm, Supplier<Boolean> up, Supplier<Boolean> down){
+    public RobotLift(ScissorLift arm, Supplier<Boolean> up, Supplier<Boolean> down){
         addRequirements(arm);
         this.lift = arm;
         this.up = up;

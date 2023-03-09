@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
 public class TopArm extends SubsystemBase {
-    private WPI_TalonSRX topSegMotor, bottomSegMotor, topArmTalon;
+    private WPI_TalonSRX topArmTalon;
     private WPI_VictorSPX topArmIntakeMotor, topArmVictor, liftMotor;
     private DigitalInput topChannelA = new DigitalInput(TOP_ENCODER_PORT_A);
     private DigitalInput topChannelB = new DigitalInput(TOP_ENCODER_PORT_B);
@@ -23,8 +23,6 @@ public class TopArm extends SubsystemBase {
     private ShuffleboardTab tab;
 
     public TopArm(ShuffleboardTab tab){
-        topSegMotor = new WPI_TalonSRX(TOP_SEG_MOTOR_ID);
-        bottomSegMotor = new WPI_TalonSRX(BOTTOM_SEG_MOTOR_ID);
         topArmTalon = new WPI_TalonSRX(TOP_ARM_TALON);
 
         topArmIntakeMotor = new WPI_VictorSPX(TOP_ARM_INTAKE);
@@ -54,18 +52,12 @@ public class TopArm extends SubsystemBase {
     public void periodic() {
     }
 
-    // Lower intake arm
-    public void move(double topMotorSpeed, double bottomMotorSpeed) {
-        topSegMotor.set(topMotorSpeed);
-        bottomSegMotor.set(bottomMotorSpeed);
-    }
-
-    public void releaseObject(double speed){
+    public void releaseObject(double speed) {
         topArmIntakeMotor.set(speed);
     }
 
     //Upper intake arm
-    public void move(double speed){
+    public void move(double speed) {
         topArmTalon.set(speed);
     }
 
@@ -74,7 +66,7 @@ public class TopArm extends SubsystemBase {
     }
     
     //lifting mechanism on robot
-    public void lift(double speed){
+    public void lift(double speed) {
         liftMotor.set(speed);
     }
 }

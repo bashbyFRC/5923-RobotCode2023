@@ -18,7 +18,7 @@ package frc.robot;
 public final class Constants {
 
     //lift motor
-    public static int LIFT_MOTOR = 8;
+    public static int LIFT_MOTOR = 0;
     
     // Top arm motor ID ports
     public static int TOP_ARM_INTAKE = 9;

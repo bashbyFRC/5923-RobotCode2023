@@ -43,7 +43,7 @@ public class TopArm extends SubsystemBase {
     }
 
     private void configureShuffleboardData() {
-        ShuffleboardLayout layout = tab.getLayout("Top arm encoder", BuiltInLayouts.kGrid).withPosition(0, 3).withSize(1,1);
+        ShuffleboardLayout layout = tab.getLayout("Top arm encoder", BuiltInLayouts.kList).withPosition(0, 3);
         layout.add(this);
 
         layout.addNumber("Top Arm Encoder", () -> getTopEncoderPosition());

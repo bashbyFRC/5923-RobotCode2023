@@ -65,7 +65,7 @@ public class RobotContainer {
   private final MecanumDrivetrain mecanumDrivetrain = new MecanumDrivetrain(m_tab);
   //private final Drivetrain drivetrain = new Drivetrain(m_tab);
   private final TopArm arms = new TopArm(m_tab);
-  //private final Intake liftBot = new Intake(m_tab);
+  private final ScissorLift liftBot = new ScissorLift(m_tab);
   private static final AHRS ahrs = new AHRS(Port.kUSB);
 
 
@@ -91,7 +91,7 @@ public class RobotContainer {
 
   private final TopArmManual intakeManual = new TopArmManual(arms, ()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper(), ()-> xbox.getLeftTriggerAxis(), ()-> xbox.getRightTriggerAxis());
 
-  private final RobotLift lift = new RobotLift(arms, ()-> xbox.getAButton(), ()-> xbox.getBButton());
+  private final RobotLift lift = new RobotLift(liftBot, ()-> xbox.getAButton(), ()-> xbox.getBButton());
   /// JOYSTICK BUTTONS ///
   JoystickButton intakeGrab = new JoystickButton(stick, INTAKE_GRAB_BUTTON);
   
@@ -117,7 +117,6 @@ public class RobotContainer {
 
     drivingStyleLayout.add("Logitech Field Drive",
     new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(logitech), mecanumDrivetrain));
-
  
     ShuffleboardLayout mecanumSensor = m_tab.getLayout("NavX", BuiltInLayouts.kGrid)
     .withPosition(2, 0).withSize(1, 3)
@@ -156,9 +155,9 @@ public class RobotContainer {
    * Default commands are ran whenever no other commands are using a specific subsystem.
    */
   private void configureInitialDefaultCommands() {
-    mecanumDrivetrain.setDefaultCommand(logitech);
     arms.setDefaultCommand(intakeManual);
-    //liftBot.setDefaultCommand(lift);
+    liftBot.setDefaultCommand(lift);
+    mecanumDrivetrain.setDefaultCommand(logitech);
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by

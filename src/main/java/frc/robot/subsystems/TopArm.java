@@ -18,7 +18,7 @@ public class TopArm extends SubsystemBase {
     private WPI_VictorSPX topArmIntakeMotor, topArmVictor, liftMotor;
     private DigitalInput topChannelA = new DigitalInput(TOP_ENCODER_PORT_A);
     private DigitalInput topChannelB = new DigitalInput(TOP_ENCODER_PORT_B);
-    private Encoder topEncoder = new Encoder(topChannelA, topChannelB, true, EncodingType.k4X);
+    private Encoder topEncoder = new Encoder(topChannelA, topChannelB, false, EncodingType.k4X);
 
     private ShuffleboardTab tab;
 

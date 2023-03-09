@@ -159,6 +159,7 @@ public class RobotContainer {
   private void configureInitialDefaultCommands() {
     mecanumDrivetrain.setDefaultCommand(logitech);
     topArm.setDefaultCommand(topArmManual);
+    //bottomArm.setDefaultCommand(bottomArmManual);
     //liftBot.setDefaultCommand(lift);
   }
   /**

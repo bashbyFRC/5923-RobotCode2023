@@ -12,7 +12,7 @@ import static frc.robot.Constants.*;
 public class TopArmAuto extends CommandBase {
     private TopArm topArm;
     private Supplier<Boolean> downPos, upPos;
-    private double[] setpoints = {ARM_IN_SETPOINT, ARM_LOW_SETPOINT, ARM_MID_SETPOINT, ARM_HIGH_SETPOINT};
+    private double[] setpoints = {ARM_IN_SETPOINT, ARM_TRANSFER_POINT_SETPOINT, ARM_MID_SETPOINT, ARM_HIGH_SETPOINT};
     private int currentSetpoint;
     private double motorSpeed, error, errorIntegral, dt, previousError, errorDerivative, previousTimestamp;
 

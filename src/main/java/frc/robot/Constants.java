@@ -82,9 +82,9 @@ public final class Constants {
     public static double ARM_KD = 0;
 
     public static double ARM_IN_SETPOINT = 0;
-    public static double ARM_LOW_SETPOINT = 0;
-    public static double ARM_MID_SETPOINT = 0;
-    public static double ARM_HIGH_SETPOINT = 0;
+    public static double ARM_TRANSFER_POINT_SETPOINT = 534;
+    public static double ARM_MID_SETPOINT = 1550;
+    public static double ARM_HIGH_SETPOINT = 2185;
 
     // Top arm constants
     public static double TOP_INTAKE_SPEED = .5;

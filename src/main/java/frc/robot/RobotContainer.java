@@ -64,15 +64,15 @@ public class RobotContainer {
   /// SUBSYSTEMS ///
   private final MecanumDrivetrain mecanumDrivetrain = new MecanumDrivetrain(m_tab);
   //private final Drivetrain drivetrain = new Drivetrain(m_tab);
-  private final TopArm arms = new TopArm(m_tab);
-  //private final Intake liftBot = new Intake(m_tab);
-  private static final AHRS ahrs = new AHRS(Port.kUSB);
+  private final TopArm topArm = new TopArm(m_tab);
+  private final BottomArm bottomArm = new BottomArm(m_tab);
 
 
-  /// OI DEVICES ///
+  /// OI DEVICES / HARDWARE ///
   private final XboxController xbox = new XboxController(0);
   private final Joystick stick = new Joystick(0);
   //private final Joystick stick2 = new Joystick(1);
+  private static final AHRS ahrs = new AHRS(Port.kUSB);
 
 
   /// COMMANDS ///
@@ -89,9 +89,10 @@ public class RobotContainer {
   private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(),
    () -> stick.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
 
-  private final TopArmManual intakeManual = new TopArmManual(arms, ()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper(), ()-> xbox.getLeftTriggerAxis(), ()-> xbox.getRightTriggerAxis());
+  private final TopArmManual topArmManual = new TopArmManual(topArm, ()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper(), ()-> xbox.getLeftTriggerAxis(), ()-> xbox.getRightTriggerAxis());
+  //private final BottomArmManual bottomArmManual = new BottomArmManual(bottomArm, () -> 0, () -> 0);
 
-  private final RobotLift lift = new RobotLift(arms, ()-> xbox.getAButton(), ()-> xbox.getBButton());
+  //private final RobotLift lift = new RobotLift(topArm, ()-> xbox.getAButton(), ()-> xbox.getBButton());
   /// JOYSTICK BUTTONS ///
   JoystickButton intakeGrab = new JoystickButton(stick, INTAKE_GRAB_BUTTON);
   
@@ -157,7 +158,7 @@ public class RobotContainer {
    */
   private void configureInitialDefaultCommands() {
     mecanumDrivetrain.setDefaultCommand(logitech);
-    arms.setDefaultCommand(intakeManual);
+    topArm.setDefaultCommand(topArmManual);
     //liftBot.setDefaultCommand(lift);
   }
   /**

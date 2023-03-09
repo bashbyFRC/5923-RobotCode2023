@@ -55,8 +55,8 @@ public class MecanumDrivetrain extends SubsystemBase {
     //
     layout.addNumber("Rear Right Encoder Pos", () -> getRearRightEncoderPosition());
     layout.addNumber("Rear Right Encoder Vel", () -> getRearRightEncoderVelocity());
-
   }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -95,16 +95,4 @@ public class MecanumDrivetrain extends SubsystemBase {
 
     mDrive.driveCartesian(xSpeed, ySpeed, zRotation);
   }
-
-  public void homeBrewMecanum(double xSpeed, double ySpeed, double zRotation, double theta){
-    xSpeed = MathUtil.applyDeadband(xSpeed, SPEED_DEADBAND);
-    ySpeed = MathUtil.applyDeadband(ySpeed, SPEED_DEADBAND);
-    zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
-    theta = Math.atan2(ySpeed, xSpeed);
-
-    frontLeftMotor.set(zRotation);
-    frontRightMotor.set(zRotation);
-    rearLeftMotor.set(zRotation);
-    rearRightMotor.set(zRotation);
-    }
-  }
+}

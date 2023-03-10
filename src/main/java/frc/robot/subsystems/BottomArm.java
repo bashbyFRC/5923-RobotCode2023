@@ -27,9 +27,9 @@ public class BottomArm extends SubsystemBase {
   }
 
   // Lower intake arm
-  public void move(double topMotorSpeed, double bottomMotorSpeed) {
-    topSegMotor.set(topMotorSpeed);
+  public void move(double bottomMotorSpeed, double topMotorSpeed) {
     bottomSegMotor.set(bottomMotorSpeed);
+    topSegMotor.set(topMotorSpeed);
 }
 
   private void configureShuffleboardData() {

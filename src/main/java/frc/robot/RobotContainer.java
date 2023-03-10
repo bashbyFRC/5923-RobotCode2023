@@ -72,28 +72,23 @@ public class RobotContainer {
   /// OI DEVICES / HARDWARE ///
   private final XboxController xbox = new XboxController(0);
   private final Joystick stick = new Joystick(0);
-  //private final Joystick stick2 = new Joystick(1);
   private static final AHRS ahrs = new AHRS(Port.kUSB);
 
 
   /// COMMANDS ///
-  //private final AutoDriveTimed m_autoDriveTimedForward = new AutoDriveTimed(mecanumDrivetrain,
-   //0.5, 0.5 , 6.5, ahrs.getRotation2d(), 0.0);
-/*
-  private final DriveMecanum fieldDriveDualJoystick = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY() + stick.getX(), ()-> -xbox.getLeftX() + stick.getY(),
-    ()-> xbox.getRightX() + stick2.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
-*/
+  // Xbox controls
+  private final DriveMecanum drivetrainXbox = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(), ()-> xbox.getRightX(), ()-> ahrs.getRotation2d(), () -> xbox.getXButton(), () -> xbox.getYButton());
+  private final TopArmManual topArmManualXbox = new TopArmManual(topArm, () -> xbox.getAButton(), () -> xbox.getBButton(), () -> xbox.getLeftTriggerAxis(), () -> xbox.getRightTriggerAxis());
+  private final BottomArmManual bottomArmManualXbox = new BottomArmManual(bottomArm, () -> xbox.getPOV());
+  private final RobotLift liftXbox = new RobotLift(scissorLift, ()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper());
 
-  private final DriveMecanum logitech = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(),
-     ()-> xbox.getRightX(), ()-> ahrs.getRotation2d());
+  // Joystick controls
+  //private final DriveMecanum drivetrainJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(), () -> stick.getTwist(), ()-> ahrs.getRotation2d());
+  //private final TopArmManual topArmManualJoystick = new TopArmManual(topArm, () -> stick.getTrigger(), () -> stick.getRawButton(2), () -> xbox.getLeftTriggerAxis(), ()-> xbox.getRightTriggerAxis());
+  //private final BottomArmManual bottomArmManualJoystick = new BottomArmManual(bottomArm, () -> stick.getPOV());
+  //private final RobotLift liftJoystick = new RobotLift(scissorLift, ()-> xbox.getAButton(), ()-> xbox.getBButton());
 
-  private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(),
-   () -> stick.getTwist(), ()-> ahrs.getRotation2d());
 
-  private final TopArmManual topArmManual = new TopArmManual(topArm, ()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper(), ()-> xbox.getLeftTriggerAxis(), ()-> xbox.getRightTriggerAxis());
-  //private final BottomArmManual bottomArmManual = new BottomArmManual(bottomArm, () -> 0, () -> 0);
-
-  private final RobotLift lift = new RobotLift(scissorLift, ()-> xbox.getAButton(), ()-> xbox.getBButton());
   /// JOYSTICK BUTTONS ///
   JoystickButton intakeGrab = new JoystickButton(stick, INTAKE_GRAB_BUTTON);
   
@@ -114,12 +109,10 @@ public class RobotContainer {
     .withPosition(0, 0).withSize(2, 2)
     .withProperties(Map.of("label position", "BOTTOM"));
 
-    drivingStyleLayout.add("Joystick Field Drive",
-    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(fieldDriveJoystick), mecanumDrivetrain));
-
+    //drivingStyleLayout.add("Joystick Field Drive",
+    //new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(drivetrainJoystick), mecanumDrivetrain));
     drivingStyleLayout.add("Logitech Field Drive",
-    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(logitech), mecanumDrivetrain));
-
+    new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(drivetrainXbox), mecanumDrivetrain));
  
     ShuffleboardLayout mecanumSensor = m_tab.getLayout("NavX", BuiltInLayouts.kGrid)
     .withPosition(2, 0).withSize(1, 3)
@@ -158,10 +151,10 @@ public class RobotContainer {
    * Default commands are ran whenever no other commands are using a specific subsystem.
    */
   private void configureInitialDefaultCommands() {
-    mecanumDrivetrain.setDefaultCommand(logitech);
-    topArm.setDefaultCommand(topArmManual);
-    //bottomArm.setDefaultCommand(bottomArmManual);
-    scissorLift.setDefaultCommand(lift);
+    mecanumDrivetrain.setDefaultCommand(drivetrainXbox);
+    topArm.setDefaultCommand(topArmManualXbox);
+    bottomArm.setDefaultCommand(bottomArmManualXbox);
+    scissorLift.setDefaultCommand(liftXbox);
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by

@@ -19,6 +19,7 @@ public class TopArm extends SubsystemBase {
     private DigitalInput topChannelA = new DigitalInput(TOP_ENCODER_PORT_A);
     private DigitalInput topChannelB = new DigitalInput(TOP_ENCODER_PORT_B);
     private Encoder topEncoder = new Encoder(topChannelA, topChannelB, false, EncodingType.k4X);
+    private ShuffleboardLayout layout;
 
     private ShuffleboardTab tab;
 
@@ -36,16 +37,20 @@ public class TopArm extends SubsystemBase {
         this.tab = tab;
         configureShuffleboardData();
 
-        topEncoder.setDistancePerPulse(TOP_ARM_DISTANCE_PER_PULSE/256.);
+        topEncoder.setDistancePerPulse(TOP_ARM_DISTANCE_PER_PULSE);
         topEncoder.setMinRate(0.1);
     }
 
     private void configureShuffleboardData() {
-        ShuffleboardLayout layout = tab.getLayout("Top arm encoder", BuiltInLayouts.kList).withPosition(0, 3);
+        layout = tab.getLayout("Top arm encoder", BuiltInLayouts.kList).withPosition(0, 3);
         layout.add(this);
 
         layout.addNumber("Top Arm Encoder", () -> getTopEncoderPosition());
         layout.add("Reset encoder", new InstantCommand(() -> topEncoder.reset()));
+    }
+
+    public void feedCurrentSetpoint(double setpoint) {
+        layout.addNumber("Current setpoint", () -> setpoint);
     }
 
     @Override

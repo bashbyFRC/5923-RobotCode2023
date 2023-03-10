@@ -21,18 +21,15 @@ public class DriveMecanum extends CommandBase {
 
   private MecanumDrivetrain drivetrain;
   private Supplier<Double>  x, y, z;
-  //private Supplier<Double> angle;
   private Supplier<Rotation2d> r;
 
-  public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle,
-  Supplier<Double> theta) {
+  public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle) {
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
     this.x = forward;
     this.y = strafe;
     this.z = zRotation;
     this.r = rAngle;
-    //this.angle = theta;
   }
 
 // Called when the command is initially scheduled.
@@ -46,20 +43,15 @@ public class DriveMecanum extends CommandBase {
     double xSpeed = -x.get();
     double ySpeed = y.get();
     double zRotation = z.get();
-    //double theta = angle.get();
     Rotation2d gyroAngle = r.get();
     
-    //drivetrain.driveCartesian(xSpeed, ySpeed, zRotation);
     drivetrain.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle.times(-1));
-    //drivetrain.homeBrewMecanum(xSpeed, ySpeed, zRotation, theta);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    //drivetrain.driveCartesian(0, 0, 0);
+  public void end(boolean interrupted) {;
     drivetrain.driveCartesian(0.0, 0.0, 0.0, r.get());
-    //drivetrain.homeBrewMecanum(0, 0, 0, 0);
   }
 
   // Returns true when the command should end.

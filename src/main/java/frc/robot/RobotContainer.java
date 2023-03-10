@@ -85,10 +85,10 @@ public class RobotContainer {
 */
 
   private final DriveMecanum logitech = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(),
-     ()-> xbox.getRightX(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
+     ()-> xbox.getRightX(), ()-> ahrs.getRotation2d());
 
   private final DriveMecanum fieldDriveJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(),
-   () -> stick.getTwist(), ()-> ahrs.getRotation2d(), () -> ahrs.getAngle());
+   () -> stick.getTwist(), ()-> ahrs.getRotation2d());
 
   private final TopArmManual topArmManual = new TopArmManual(topArm, ()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper(), ()-> xbox.getLeftTriggerAxis(), ()-> xbox.getRightTriggerAxis());
   //private final BottomArmManual bottomArmManual = new BottomArmManual(bottomArm, () -> 0, () -> 0);

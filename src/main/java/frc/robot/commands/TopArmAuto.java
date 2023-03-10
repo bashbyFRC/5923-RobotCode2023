@@ -33,6 +33,7 @@ public class TopArmAuto extends CommandBase {
     public void execute() {
         if (downPos.get() && currentSetpoint > 0) { currentSetpoint--; }
         if (upPos.get() && currentSetpoint < setpoints.length - 1) { currentSetpoint++; }
+        topArm.feedCurrentSetpoint(setpoints[currentSetpoint]);
 
         // PID calculations
         error = setpoints[currentSetpoint] - topArm.getTopEncoderPosition();

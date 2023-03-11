@@ -40,9 +40,9 @@ public class MecanumDrivetrain extends SubsystemBase {
   }
 
   private void configureShuffleboardData() {
-    ShuffleboardLayout layout = tab.getLayout("Drivetrain Data", BuiltInLayouts.kGrid).withPosition(10, 0);
+    ShuffleboardLayout layout = tab.getLayout("Encoder Vals", BuiltInLayouts.kGrid).withPosition(10, 0);
     layout.add(this);
-    layout.add("Mecanum Drive Base", mDrive);
+    //layout.add("Mecanum Drive Base", mDrive);
     //
     layout.addNumber("Front Left Encoder Pos", () -> getFrontLeftEncoderPosition());
     layout.addNumber("Front Left Encoder Vel", () -> getFrontLeftEncoderVelocity());

@@ -146,9 +146,6 @@ public class RobotContainer {
     .withPosition(0, 6).withSize(5, 2)
     .withWidget(BuiltInWidgets.kSplitButtonChooser);   
 
-    ShuffleboardLayout layout = m_tab.getLayout("Top arm encoder", BuiltInLayouts.kList).withPosition(0, 3);
-      layout.addNumber("Top Arm Encoder", () -> topArm.getTopEncoderPosition());
-      layout.add("Reset encoder", new InstantCommand(() -> topArm.topEncoder.reset()));
   }
   /**
    * Use this method to define the default commands of subsystems. 

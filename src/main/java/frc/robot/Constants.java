@@ -37,10 +37,10 @@ public final class Constants {
     public static int BACK_RIGHT_TALON_ID = 2;
 
     // Encoder ports
-    public static int TOP_ENCODER_PORT_A = 0;
+    public static int TOP_ENCODER_PORT_A = 0; // hex bore
     public static int TOP_ENCODER_PORT_B = 1;
 
-    public static int BOTTOM_LOW_ENCODER_PORT_A = 2;
+    public static int BOTTOM_LOW_ENCODER_PORT_A = 2; // cimcoders
     public static int BOTTOM_LOW_ENCODER_PORT_B = 3;
 
     public static int BOTTOM_HIGH_ENCODER_PORT_A = 4;
@@ -81,6 +81,14 @@ public final class Constants {
     public static double TOP_SEG_KP = 0;
     public static double TOP_SEG_KI = 0;
     public static double TOP_SEG_KD = 0;
+
+    // Autonomous drivetrain PID
+    public static double AUTON_KP = 0;
+    public static double AUTON_KI = 0;
+    public static double AUTON_KD = 0;
+    public static double AUTON_DISTANCE_SETPOINT = 3; // feet
+
+    public static double COLLISION_THRESHOLD = 0;
 
     // Intake arm measurements
     public static double TOP_ARM_DISTANCE_PER_PULSE = 1/256;

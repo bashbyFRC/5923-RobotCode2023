@@ -76,6 +76,9 @@ public class RobotContainer {
 
 
   /// COMMANDS ///
+  // Autonomous
+  private final SimpleAutonomous simpleAuto = new SimpleAutonomous(mecanumDrivetrain, topArm, bottomArm, ahrs);
+
   // Xbox controls
   private final DriveMecanum drivetrainXbox = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(), ()-> xbox.getRightX(), ()-> ahrs.getRotation2d(), () -> xbox.getXButton(), () -> xbox.getYButton());
   private final TopArmManual topArmManualXbox = new TopArmManual(topArm, () -> xbox.getAButton(), () -> xbox.getBButton(), () -> xbox.getLeftTriggerAxis(), () -> xbox.getRightTriggerAxis());
@@ -101,8 +104,7 @@ public class RobotContainer {
   private void configureShuffleboardData() {
     Shuffleboard.selectTab(m_tab.getTitle());
     
-    //m_chooser.setDefaultOption("First Course", m_autoDriveTimedForward);
-    //m_chooser.addOption("Drive Reverse", m_autoDriveTimedReverse);
+    m_chooser.setDefaultOption("Basic Autonomous Sequence", simpleAuto);
     m_chooser.addOption("Nothing", null);
 
     ShuffleboardLayout drivingStyleLayout = m_tab.getLayout("driving styles", BuiltInLayouts.kList)

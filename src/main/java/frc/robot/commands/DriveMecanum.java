@@ -70,6 +70,7 @@ public class DriveMecanum extends CommandBase {
     
     
     drivetrain.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle.times(-1));
+    //drivetrain.driveCartesian(xSpeed, ySpeed, zRotation); // bot-oriented drive
   }
 
   // Called once the command ends or is interrupted.

@@ -126,7 +126,7 @@ public class RobotContainer {
     mecanumSensor.add("Calibrate",
     new InstantCommand(()-> ahrs.calibrate()));
 
-    ShuffleboardLayout controllerLayout = m_tab.getLayout("xbox", BuiltInLayouts.kGrid)
+    ShuffleboardLayout controllerLayout = m_tab.getLayout("Controller Vals", BuiltInLayouts.kGrid)
     .withPosition(4, 0).withSize(2, 6)
     .withProperties(Map.of("label position", "BOTTOM"));
     controllerLayout.addNumber("left y", () -> -xbox.getLeftY())
@@ -145,6 +145,7 @@ public class RobotContainer {
     m_tab.add("Auto Chooser", m_chooser)
     .withPosition(0, 6).withSize(5, 2)
     .withWidget(BuiltInWidgets.kSplitButtonChooser);   
+
   }
   /**
    * Use this method to define the default commands of subsystems. 

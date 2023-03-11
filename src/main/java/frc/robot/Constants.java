@@ -41,10 +41,10 @@ public final class Constants {
     public static int TOP_ENCODER_PORT_B = 1;
 
     public static int BOTTOM_LOW_ENCODER_PORT_A = 2; // cimcoders
-    public static int BOTTOM_LOW_ENCODER_PORT_B = 3;
+    public static int BOTTOM_LOW_ENCODER_PORT_B = 3; //left side
 
     public static int BOTTOM_HIGH_ENCODER_PORT_A = 4;
-    public static int BOTTOM_HIGH_ENCODER_PORT_B = 5;
+    public static int BOTTOM_HIGH_ENCODER_PORT_B = 5; //right side
 
     // Drivetrain multipliers
     public static double ROTATION_DEADBAND = .15;   //.25

@@ -82,12 +82,12 @@ public class MecanumDrivetrain extends SubsystemBase {
   //public double getRearLeftEncoderVelocity() { return rearLeftMotor.getSelectedSensorVelocity(); }
   //public double getRearRightEncoderVelocity() { return rearRightMotor.getSelectedSensorVelocity(); }
 
-  public void driveCartesian(double xSpeed, double ySpeed, double zRotation, Rotation2d gyroAngle) {
-    xSpeed = MathUtil.applyDeadband(xSpeed, SPEED_DEADBAND);
-    ySpeed = MathUtil.applyDeadband(ySpeed, SPEED_DEADBAND);
+  public void driveCartesian(double forward, double side, double zRotation, Rotation2d gyroAngle) {
+    forward = MathUtil.applyDeadband(forward, SPEED_DEADBAND);
+    side = MathUtil.applyDeadband(side, SPEED_DEADBAND);
     zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
 
-    mDrive.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle);
+    mDrive.driveCartesian(forward, side, zRotation, gyroAngle);
   }
 
   //Bot-oriented

@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TopArm;
@@ -16,7 +15,7 @@ public class TopArmAuto extends CommandBase {
     private int currentSetpoint;
     private double motorSpeed, error, errorIntegral, dt, previousError, errorDerivative, previousTimestamp;
 
-    public TopArmAuto(TopArm arm, Supplier<Encoder> topEncoder, Supplier<Boolean> downPos, Supplier<Boolean> upPos){
+    public TopArmAuto(TopArm arm, Supplier<Boolean> downPos, Supplier<Boolean> upPos){
         addRequirements(arm);
         this.topArm = arm;
         this.downPos = downPos;

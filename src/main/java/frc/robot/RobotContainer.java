@@ -80,10 +80,12 @@ public class RobotContainer {
   private final SimpleAutonomous simpleAuto = new SimpleAutonomous(mecanumDrivetrain, topArm, bottomArm, ahrs);
 
   // Xbox controls
-  private final DriveMecanum drivetrainXbox = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(), ()-> xbox.getRightX(), ()-> ahrs.getRotation2d(), () -> xbox.getXButton(), () -> xbox.getYButton());
-  private final TopArmManual topArmManualXbox = new TopArmManual(topArm, () -> xbox.getAButton(), () -> xbox.getBButton(), () -> xbox.getLeftTriggerAxis(), () -> xbox.getRightTriggerAxis());
+  private final DriveMecanum drivetrainXbox = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(), ()-> xbox.getRightX(), ()-> ahrs.getRotation2d(), () -> xbox.getBButton(), () -> xbox.getYButton());
+  private final TopArmManual topArmManualXbox = new TopArmManual(topArm, () -> xbox.getAButton(), () -> xbox.getXButton(), () -> xbox.getLeftTriggerAxis(), () -> xbox.getRightTriggerAxis());
   private final BottomArmManual bottomArmManualXbox = new BottomArmManual(bottomArm, () -> xbox.getPOV());
   private final RobotLift liftXbox = new RobotLift(scissorLift, ()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper());
+
+  private final TopArmAuto topArmAutoXbox = new TopArmAuto(topArm, () -> xbox.getLeftBumperReleased(), () -> xbox.getRightBumperReleased());
 
   // Joystick controls
   //private final DriveMecanum drivetrainJoystick = new DriveMecanum(mecanumDrivetrain, () -> stick.getX(), () -> stick.getY(), () -> stick.getTwist(), ()-> ahrs.getRotation2d());

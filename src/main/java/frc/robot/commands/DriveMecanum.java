@@ -54,7 +54,7 @@ public class DriveMecanum extends CommandBase {
     double angleSetpoint = 0;
     Rotation2d gyroAngle = r.get();
 
-    
+    /*
     if (rotate0.get() == true) {
       homingMode = !homingMode;
       angleSetpoint = 0;
@@ -67,7 +67,7 @@ public class DriveMecanum extends CommandBase {
     if (homingMode) {
       zRotation = calculateRotationSpeed(gyroAngle.getDegrees(), angleSetpoint, ROTATE_KP, ROTATE_KI, ROTATE_KD);
     }
-    
+    */
     
     drivetrain.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle.times(-1));
     //drivetrain.driveCartesian(xSpeed, ySpeed, zRotation); // bot-oriented drive

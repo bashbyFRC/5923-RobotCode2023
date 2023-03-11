@@ -134,7 +134,7 @@ public class SimpleAutonomous extends CommandBase {
     switch (phase) {
       case 1: // move to scoring area
       if (timer.get() < 2) {
-        drivetrain.driveCartesian(0.75, 0, 0, ahrs.getRotation2d());
+        drivetrain.driveCartesian(-0.3, 0, 0, ahrs.getRotation2d());
         topArm.releaseObject(-TOP_INTAKE_SPEED / 2);
       }
       else {
@@ -144,7 +144,7 @@ public class SimpleAutonomous extends CommandBase {
         break;
       case 2: // extend arm
         if (timer.get() < 4) {
-          topArm.move(0.45);
+          topArm.move(0.4);
           topArm.releaseObject(-TOP_INTAKE_SPEED);
         }
         else {
@@ -163,7 +163,7 @@ public class SimpleAutonomous extends CommandBase {
         break;
       case 4:
         if (timer.get() < 9) {
-          drivetrain.driveCartesian(-0.4, 0, 0, ahrs.getRotation2d());
+          drivetrain.driveCartesian(0.3, 0, 0, ahrs.getRotation2d());
         }
         else {
           drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
@@ -172,7 +172,7 @@ public class SimpleAutonomous extends CommandBase {
         break;
       case 5:
         if (timer.get() < 11) {
-          topArm.move(-0.5);
+          topArm.move(-0.3);
         }
         else {
           topArm.move(0);

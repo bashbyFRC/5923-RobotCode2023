@@ -17,6 +17,7 @@ import com.kauailabs.navx.frc.AHRS;
 public class SimpleAutonomous extends CommandBase {
   private double error, dt, errorDerivative, previousTimestamp, previousError, errorIntegral;
   private double lastWorldLinearAccelX, lastWorldLinearAccelY;
+  private double armMotorOutput, forwardOutput, rotation;
   private MecanumDrivetrain drivetrain;
   private TopArm topArm;
   //private BottomArm bottomArm;
@@ -37,22 +38,61 @@ public class SimpleAutonomous extends CommandBase {
   @Override
   public void initialize() {
     phase = 1;
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    timedAutoSequence();
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {}
+
+  private double pidCalculation(double current, double setpoint, double kP, double kI, double kD) {
+    error = setpoint - current;
+    dt = Timer.getFPGATimestamp() - previousTimestamp;
+    if (Math.abs(error) < 100) { errorIntegral = error * dt; } // integral term only calculated within a radius to minimize oscillation
+    errorDerivative = (error - previousError) / dt; // de/dt
+
+    previousError = error; // update value for next iteration
+    previousTimestamp = Timer.getFPGATimestamp();
+
+    return (kP * error) + (kI * errorIntegral) + (kD * errorDerivative);
+  }
+
+  private boolean collisionDetected() {
+    boolean collisionDetected = false;
+    // x-component
+    double currentWorldLinearAccelX = ahrs.getWorldLinearAccelX();
+    double jerkX = currentWorldLinearAccelX - lastWorldLinearAccelX;
+    lastWorldLinearAccelX = currentWorldLinearAccelX;
+    // y-component
+    double currentWorldLinearAccelY = ahrs.getWorldLinearAccelY();
+    double jerkY = currentWorldLinearAccelY - lastWorldLinearAccelY;
+    lastWorldLinearAccelY = currentWorldLinearAccelY;
+    
+    if (Math.abs(jerkX) > COLLISION_THRESHOLD || Math.abs(jerkY) > COLLISION_THRESHOLD) {
+      collisionDetected = true;
+    }
+
+    return collisionDetected;
+  }
+
+  private void pidAutoSequence() {
     switch (phase) {
       case 1: // extend arm
-        double armMotorOutput = pidCalculation(topArm.getTopEncoderPosition(), ARM_HIGH_SETPOINT, ARM_KP, ARM_KI, ARM_KD);
+        armMotorOutput = pidCalculation(topArm.getTopEncoderPosition(), ARM_HIGH_SETPOINT, ARM_KP, ARM_KI, ARM_KD);
         topArm.move(armMotorOutput);
         if (Math.abs(armMotorOutput) > .025) {
           phase++;
         }
         break;
       case 2: // move to scoring area
-        double forwardOutput = pidCalculation(drivetrain.getFrontLeftEncoderPosition(), AUTON_DISTANCE_SETPOINT, AUTON_KP, AUTON_KI, AUTON_KD);
-        double rotation = pidCalculation(ahrs.getRotation2d().getDegrees(), 0, ROTATE_KP, ROTATE_KI, ROTATE_KD);
+        forwardOutput = pidCalculation(drivetrain.getFrontLeftEncoderPosition(), AUTON_DISTANCE_SETPOINT, AUTON_KP, AUTON_KI, AUTON_KD);
+        rotation = pidCalculation(ahrs.getRotation2d().getDegrees(), 0, ROTATE_KP, ROTATE_KI, ROTATE_KD);
         drivetrain.driveCartesian(forwardOutput, 0, rotation, ahrs.getRotation2d());
         if (Math.abs(forwardOutput) < 0.025) {
           phase++;
@@ -90,39 +130,61 @@ public class SimpleAutonomous extends CommandBase {
     }
   }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  private double pidCalculation(double current, double setpoint, double kP, double kI, double kD) {
-    error = setpoint - current;
-    dt = Timer.getFPGATimestamp() - previousTimestamp;
-    if (Math.abs(error) < 100) { errorIntegral = error * dt; } // integral term only calculated within a radius to minimize oscillation
-    errorDerivative = (error - previousError) / dt; // de/dt
-
-    previousError = error; // update value for next iteration
-    previousTimestamp = Timer.getFPGATimestamp();
-
-    return (kP * error) + (kI * errorIntegral) + (kD * errorDerivative);
-  }
-
-  private boolean collisionDetected() {
-    boolean collisionDetected = false;
-    // x-component
-    double currentWorldLinearAccelX = ahrs.getWorldLinearAccelX();
-    double jerkX = currentWorldLinearAccelX - lastWorldLinearAccelX;
-    lastWorldLinearAccelX = currentWorldLinearAccelX;
-    // y-component
-    double currentWorldLinearAccelY = ahrs.getWorldLinearAccelY();
-    double jerkY = currentWorldLinearAccelY - lastWorldLinearAccelY;
-    lastWorldLinearAccelY = currentWorldLinearAccelY;
-    
-    if (Math.abs(jerkX) > COLLISION_THRESHOLD || Math.abs(jerkY) > COLLISION_THRESHOLD) {
-      collisionDetected = true;
+  private void timedAutoSequence() {
+    switch (phase) {
+      case 1: // extend arm
+        if (timer.get() < 2) {
+          topArm.move(0.75);
+        }
+        else {
+          topArm.move(0);
+          phase++;
+        }
+        break;
+      case 2: // move to scoring area
+        if (timer.get() < 5) {
+          drivetrain.driveCartesian(0.75, 0, 0, ahrs.getRotation2d());
+        }
+        else {
+          drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
+          phase++;
+        }
+        break;
+      case 3: // release cone
+        if (timer.get() < 7) {
+          topArm.releaseObject(TOP_INTAKE_SPEED);
+        }
+        else {
+          topArm.releaseObject(0);
+          phase++;
+        }
+        break;
+      case 4:
+        if (timer.get() < 10) {
+          drivetrain.driveCartesian(-0.75, 0, 0, ahrs.getRotation2d());
+        }
+        else {
+          drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
+          phase++;
+        }
+        break;
+      case 5:
+        if (timer.get() < 12) {
+          topArm.move(-0.5);
+        }
+        else {
+          topArm.move(0);
+          phase++;
+        }
+        break;
+      default:
+        topArm.move(0);
+        topArm.releaseObject(0);
+        drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
     }
-
-    return collisionDetected;
   }
+  
+
 
   // Returns true when the command should end.
   @Override

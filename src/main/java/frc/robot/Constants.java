@@ -18,7 +18,7 @@ package frc.robot;
 public final class Constants {
 
     //lift motor
-    public static int LIFT_MOTOR = 8;
+    public static int LIFT_MOTOR = 0;
     
     // Top arm motor ID ports
     public static int TOP_ARM_INTAKE = 9;
@@ -58,23 +58,32 @@ public final class Constants {
     public static boolean IS_ARCADEDRIVE_SQUARED = true;
 
     // Auto rotate PID constants
-    public static int MECANUM_KP = 0;
-    public static int MECANUM_KI = 0;
-    public static int MECANUM_KD = 0;
+    public static int ROTATE_KP = 0;
+    public static int ROTATE_KI = 0;
+    public static int ROTATE_KD = 0;
 
     // Bottom arm constants
     public static double BOTTOM_ARM_SPEED = 0.5;
 
-    // Intake arm PID constants
-    public static double INTAKE_KP = 0;
-    public static double INTAKE_KI = 0;
-    public static double INTAKE_KD = 0;
+    public static double BOTTOM_SEG_RETRACTED_SETPOINT = 0;
+    public static double TOP_SEG_RETRACTED_SETPOINT = 0;
 
-    public static double DESTINATION_POSITION = 0;
-    public static double MOTOR_SPEED_RATIO = 1;
+    public static double BOTTOM_SEG_EXTENDED_SETPOINT = 0;
+    public static double TOP_SEG_EXTENDED_SETPOINT = 0;
+
+    public static double BOTTOM_SEG_FEED_SETPOINT = 0;
+    public static double TOP_SEG_FEED_SETPOINT = 0;
+
+    public static double BOTTOM_SEG_KP = 0;
+    public static double BOTTOM_SEG_KI = 0;
+    public static double BOTTOM_SEG_KD = 0;
+
+    public static double TOP_SEG_KP = 0;
+    public static double TOP_SEG_KI = 0;
+    public static double TOP_SEG_KD = 0;
 
     // Intake arm measurements
-    public static double TOP_ARM_DISTANCE_PER_PULSE = 1;
+    public static double TOP_ARM_DISTANCE_PER_PULSE = 1/256;
 
     // Top arm PID constants
     public static double ARM_KP = 0;

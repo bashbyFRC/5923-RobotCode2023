@@ -27,17 +27,20 @@ public class BottomArm extends SubsystemBase {
   }
 
   // Lower intake arm
-  public void move(double topMotorSpeed, double bottomMotorSpeed) {
-    topSegMotor.set(topMotorSpeed);
+  public void move(double bottomMotorSpeed, double topMotorSpeed) {
     bottomSegMotor.set(bottomMotorSpeed);
+    topSegMotor.set(topMotorSpeed);
 }
 
-  public void configureShuffleboardData() {
+  private void configureShuffleboardData() {
     ShuffleboardLayout layout = tab.getLayout("Bottom Arm", BuiltInLayouts.kList);
 
     layout.addNumber("Top segment encoder value", () -> topSegMotor.getSelectedSensorPosition());
     layout.addNumber("Bottom segment encoder value", () -> bottomSegMotor.getSelectedSensorPosition());
   }
+
+  public double getBottomSegEncoderPos() { return bottomSegMotor.getSelectedSensorPosition(); }
+  public double getTopSegEncoderPos() { return topSegMotor.getSelectedSensorPosition(); }
 
   @Override
   public void periodic() {

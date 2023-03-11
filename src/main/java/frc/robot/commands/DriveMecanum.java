@@ -35,6 +35,8 @@ public class DriveMecanum extends CommandBase {
     this.y = strafe;
     this.z = zRotation;
     this.r = rAngle;
+    this.rotate0 = rotate0;
+    this.rotate180 = rotate180;
   }
 
 // Called when the command is initially scheduled.

@@ -23,20 +23,19 @@ public class DriveMecanum extends CommandBase {
 
   private MecanumDrivetrain drivetrain;
   private Supplier<Double>  x, y, z;
-  private Supplier<Boolean> rotate0, rotate180;
+  private Supplier<Boolean> motorToggle;
   private boolean homingMode;
   private double error, dt, previousTimestamp, previousError, errorIntegral, errorDerivative;
   private Supplier<Rotation2d> r;
 
-  public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle, Supplier<Boolean> rotate0, Supplier<Boolean> rotate180) {
+  public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle, Supplier<Boolean> motorToggle) {
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
     this.x = forward;
     this.y = strafe;
     this.z = zRotation;
     this.r = rAngle;
-    this.rotate0 = rotate0;
-    this.rotate180 = rotate180;
+    this.motorToggle = motorToggle;
   }
 
 // Called when the command is initially scheduled.
@@ -53,6 +52,10 @@ public class DriveMecanum extends CommandBase {
     double zRotation = z.get();
     double angleSetpoint = 0;
     Rotation2d gyroAngle = r.get();
+
+    if (motorToggle.get()) {
+      drivetrain.toggleMotorMode(true);
+    }
 
     /*
     if (rotate0.get() == true) {

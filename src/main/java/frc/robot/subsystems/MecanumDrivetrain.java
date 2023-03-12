@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.MathUtil;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class MecanumDrivetrain extends SubsystemBase {
   private WPI_TalonSRX frontRightMotor, rearRightMotor, rearLeftMotor, frontLeftMotor;
+  private boolean type;
 
   private MecanumDrive mDrive;
   private ShuffleboardTab tab;
@@ -34,12 +36,33 @@ public class MecanumDrivetrain extends SubsystemBase {
     rearLeftMotor.setInverted(false);
     frontRightMotor.setInverted(true);
     rearRightMotor.setInverted(true);
+    
+    toggleMotorMode(false);
+    type = false;
 
     mDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
     this.tab = tab;
 
     configureShuffleboardData();
+  }
+
+  public void toggleMotorMode(boolean typeSwitch) {
+    if (typeSwitch) {
+      type = !type;
+    }
+    if (type) {//coast mode
+      frontLeftMotor.setNeutralMode(NeutralMode.Coast);
+      frontRightMotor.setNeutralMode(NeutralMode.Coast);
+      rearLeftMotor.setNeutralMode(NeutralMode.Coast);
+      rearRightMotor.setNeutralMode(NeutralMode.Coast);
+    }
+    else {
+      frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+      frontRightMotor.setNeutralMode(NeutralMode.Brake);
+      rearLeftMotor.setNeutralMode(NeutralMode.Brake);
+      rearRightMotor.setNeutralMode(NeutralMode.Brake);
+    }
   }
 
   private void configureShuffleboardData() {
@@ -58,6 +81,8 @@ public class MecanumDrivetrain extends SubsystemBase {
     //
     layout.addNumber("Rear Right Encoder Pos", () -> getRearRightEncoderPosition());
     //layout.addNumber("Rear Right Encoder Vel", () -> getRearRightEncoderVelocity());
+
+    layout.addBoolean("Brake Mode", () -> type);
   }
   
   @Override

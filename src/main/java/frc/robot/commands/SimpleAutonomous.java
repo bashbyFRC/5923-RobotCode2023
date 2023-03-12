@@ -134,7 +134,7 @@ public class SimpleAutonomous extends CommandBase {
     switch (phase) {
       case 1: // move to scoring area
       if (timer.get() < 2) {
-        drivetrain.driveCartesian(-0.3, 0, 0, ahrs.getRotation2d());
+        drivetrain.driveCartesian(-0.4, 0, 0, ahrs.getRotation2d());
         topArm.releaseObject(-TOP_INTAKE_SPEED / 2);
       }
       else {

@@ -50,7 +50,7 @@ public final class Constants {
     public static double ROTATION_DEADBAND = .15;   //.25
     public static double STRAFING_DEADBAND = .15;  //.75
     public static double SPEED_DEADBAND = .15; //.3
-    public static double MAX_OUTPUT = .75;
+    public static double MAX_OUTPUT = 1;
 
     // Drivetrain logic
     public static boolean IS_TANKDRIVE_SQUARED = false;

@@ -163,7 +163,7 @@ public class SimpleAutonomous extends CommandBase {
         break;
       case 4:
         if (timer.get() < 9) {
-          drivetrain.driveCartesian(0.3, 0, 0, ahrs.getRotation2d());
+          drivetrain.driveCartesian(0.5, 0, 0, ahrs.getRotation2d());
         }
         else {
           drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());

@@ -62,10 +62,6 @@ public class DriveMecanum extends CommandBase {
       homingMode = !homingMode;
       angleSetpoint = 0;
     }
-    else if (rotate180.get()) {
-      homingMode = !homingMode;
-      angleSetpoint = 180;
-    }
 
     if (homingMode) {
       zRotation = calculateRotationSpeed(gyroAngle.getDegrees(), angleSetpoint, ROTATE_KP, ROTATE_KI, ROTATE_KD);

@@ -40,6 +40,19 @@ public class MecanumDrivetrain extends SubsystemBase {
     toggleMotorMode(false);
     type = false;
 
+    // voltage comp
+    frontLeftMotor.configVoltageCompSaturation(10); // "full output" will now scale to 11 Volts for all control modes when enabled.
+    frontLeftMotor.enableVoltageCompensation(true); // turn on/off feature
+
+    rearLeftMotor.configVoltageCompSaturation(10); 
+    rearLeftMotor.enableVoltageCompensation(true); 
+
+    frontRightMotor.configVoltageCompSaturation(10); 
+    frontRightMotor.enableVoltageCompensation(true); 
+
+    rearRightMotor.configVoltageCompSaturation(10); 
+    rearRightMotor.enableVoltageCompensation(true); 
+
     mDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
     this.tab = tab;
@@ -122,5 +135,9 @@ public class MecanumDrivetrain extends SubsystemBase {
     zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
 
     mDrive.driveCartesian(xSpeed, ySpeed, zRotation);
+  }
+
+  public void voltageDrive(double xVolt, double yVolt, double rVolt){
+
   }
 }

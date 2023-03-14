@@ -95,7 +95,7 @@ public final class Constants {
 
     // Top arm PID constants
     public static double ARM_KP = 0.00046;
-    public static double ARM_KI = 0;
+    public static double ARM_KI = 0.00014;
     public static double ARM_KD = 0;
 
     public static double ARM_IN_SETPOINT = 0;

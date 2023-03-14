@@ -55,7 +55,7 @@ public class TopArm extends SubsystemBase {
     }
 
     public void feedCurrentSetpoint(double setpoint) {
-        layout.addNumber("Current setpoint", () -> setpoint);
+        layout.addNumber("Current top arm setpoint", () -> setpoint);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class TopArm extends SubsystemBase {
     //Upper intake arm
     public void move(double speed) {
         topArmTalon.set(speed);
-        layout.addNumber("Top Arm Voltage", () -> topArmTalon.getBusVoltage());
+        //layout.addNumber("Top Arm Voltage", () -> topArmTalon.getBusVoltage());
     }
 
     public double getTopEncoderPosition() {

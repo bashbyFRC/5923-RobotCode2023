@@ -157,7 +157,7 @@ public class RobotContainer {
    */
   private void configureInitialDefaultCommands() {
     mecanumDrivetrain.setDefaultCommand(drivetrainXbox);
-    topArm.setDefaultCommand(topArmManualXbox);
+    topArm.setDefaultCommand(topArmAutoXbox);
     bottomArm.setDefaultCommand(bottomArmManualXbox);
     scissorLift.setDefaultCommand(liftXbox);
   }

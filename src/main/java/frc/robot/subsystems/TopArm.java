@@ -22,6 +22,7 @@ public class TopArm extends SubsystemBase {
     private DigitalInput topChannelB = new DigitalInput(TOP_ENCODER_PORT_B);
     public Encoder topEncoder = new Encoder(topChannelA, topChannelB, false, EncodingType.k4X);
     private ShuffleboardLayout layout;
+    private double setpoint;
 
     private ShuffleboardTab tab;
 
@@ -51,11 +52,11 @@ public class TopArm extends SubsystemBase {
 
         layout.addNumber("Top Arm Encoder", () -> getTopEncoderPosition());
         layout.add("Reset encoder", new InstantCommand(() -> topEncoder.reset()));
-        
+        layout.addNumber("Current top arm setpoint", () -> setpoint);
     }
 
     public void feedCurrentSetpoint(double setpoint) {
-        layout.addNumber("Current top arm setpoint", () -> setpoint);
+        this.setpoint = setpoint;
     }
 
     @Override
@@ -63,7 +64,7 @@ public class TopArm extends SubsystemBase {
     }
 
     public void releaseObject(double speed) {
-        topArmIntakeMotor.setVoltage(speed);
+        topArmIntakeMotor.set(speed);
     }
 
     //Upper intake arm

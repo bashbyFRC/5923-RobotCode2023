@@ -118,6 +118,10 @@ public class RobotContainer {
     drivingStyleLayout.add("Logitech Field Drive",
     new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(drivetrainXbox), mecanumDrivetrain));
  
+    ShuffleboardLayout topArmCommand = m_tab.getLayout("Top Arm Command", BuiltInLayouts.kList);
+    topArmCommand.add("Manual Mode", new InstantCommand(() -> topArm.setDefaultCommand(topArmManualXbox), topArm));
+    topArmCommand.add("PID Mode", new InstantCommand(() -> topArm.setDefaultCommand(topArmAutoXbox), topArm));
+
     ShuffleboardLayout mecanumSensor = m_tab.getLayout("NavX", BuiltInLayouts.kGrid)
     .withPosition(2, 0).withSize(1, 3)
     .withProperties(Map.of("label position", "BOTTOM"));
@@ -157,7 +161,7 @@ public class RobotContainer {
    */
   private void configureInitialDefaultCommands() {
     mecanumDrivetrain.setDefaultCommand(drivetrainXbox);
-    topArm.setDefaultCommand(topArmAutoXbox);
+    topArm.setDefaultCommand(topArmManualXbox);
     bottomArm.setDefaultCommand(bottomArmManualXbox);
     scissorLift.setDefaultCommand(liftXbox);
   }

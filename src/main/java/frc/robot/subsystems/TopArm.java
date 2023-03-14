@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -25,9 +27,11 @@ public class TopArm extends SubsystemBase {
 
     public TopArm(ShuffleboardTab tab){
         topArmTalon = new WPI_TalonSRX(TOP_ARM_TALON);
+        topArmTalon.setNeutralMode(NeutralMode.Brake);
 
         topArmIntakeMotor = new WPI_VictorSPX(TOP_ARM_INTAKE);
         topArmVictor = new WPI_VictorSPX(TOP_ARM_VICTOR);
+        topArmIntakeMotor.setNeutralMode(NeutralMode.Brake);
 
         liftMotor = new WPI_VictorSPX(LIFT_MOTOR);
 
@@ -59,12 +63,13 @@ public class TopArm extends SubsystemBase {
     }
 
     public void releaseObject(double speed) {
-        topArmIntakeMotor.set(speed);
+        topArmIntakeMotor.setVoltage(speed);
     }
 
     //Upper intake arm
     public void move(double speed) {
         topArmTalon.set(speed);
+        layout.addNumber("Top Arm Voltage", () -> topArmTalon.getBusVoltage());
     }
 
     public double getTopEncoderPosition() {

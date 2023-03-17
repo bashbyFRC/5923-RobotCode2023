@@ -37,7 +37,7 @@ public class TopArmAuto extends CommandBase {
         // PID calculations
         error = setpoints[currentSetpoint] - topArm.getTopEncoderPosition();
         dt = Timer.getFPGATimestamp() - previousTimestamp;
-        if (Math.abs(error) < 100) { errorIntegral = error * dt; } // integral term only calculated within a radius to minimize oscillation
+        errorIntegral += error * dt;
         errorDerivative = (error - previousError) / dt; // de/dt
 
         previousError = error; // update value for next iteration

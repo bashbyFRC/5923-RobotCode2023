@@ -98,9 +98,10 @@ public final class Constants {
     public static double TOP_ARM_DISTANCE_PER_PULSE = 1/256;
 
     // Top arm PID constants
-    public static double ARM_KP = 0.00046;
-    public static double ARM_KI = 0;
+    public static double ARM_KP = 0.0005;
+    public static double ARM_KI = 0.00025;
     public static double ARM_KD = 0;
+    public static double ARM_INTEGRAL_TOLERANCE = 250;
 
     public static double ARM_IN_SETPOINT = 0;
     public static double ARM_TRANSFER_POINT_SETPOINT = 534;

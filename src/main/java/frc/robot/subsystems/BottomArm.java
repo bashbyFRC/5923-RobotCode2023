@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -21,6 +22,9 @@ public class BottomArm extends SubsystemBase {
   public BottomArm(ShuffleboardTab tab) {
     topSegMotor = new WPI_TalonSRX(TOP_SEG_MOTOR_ID);
     bottomSegMotor = new WPI_TalonSRX(BOTTOM_SEG_MOTOR_ID);
+
+    topSegMotor.setNeutralMode(NeutralMode.Brake);
+    bottomSegMotor.setNeutralMode(NeutralMode.Brake);
 
     this.tab = tab;
     configureShuffleboardData();

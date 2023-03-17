@@ -41,17 +41,39 @@ public class MecanumDrivetrain extends SubsystemBase {
     type = false;
 
     // voltage comp
-    frontLeftMotor.configVoltageCompSaturation(10); // "full output" will now scale to 11 Volts for all control modes when enabled.
+    frontLeftMotor.configVoltageCompSaturation(12); // "full output" will now scale to 11 Volts for all control modes when enabled.
     frontLeftMotor.enableVoltageCompensation(true); // turn on/off feature
 
-    rearLeftMotor.configVoltageCompSaturation(10); 
+    rearLeftMotor.configVoltageCompSaturation(12); 
     rearLeftMotor.enableVoltageCompensation(true); 
 
-    frontRightMotor.configVoltageCompSaturation(10); 
+    frontRightMotor.configVoltageCompSaturation(12); 
     frontRightMotor.enableVoltageCompensation(true); 
 
-    rearRightMotor.configVoltageCompSaturation(10); 
+    rearRightMotor.configVoltageCompSaturation(12); 
     rearRightMotor.enableVoltageCompensation(true); 
+
+    //amp limits
+    frontLeftMotor.configPeakCurrentLimit(peakLimit);
+    frontRightMotor.configPeakCurrentLimit(peakLimit);
+    rearRightMotor.configPeakCurrentLimit(peakLimit);
+    rearLeftMotor.configPeakCurrentLimit(peakLimit);
+
+    frontLeftMotor.configPeakCurrentDuration(100);
+    frontRightMotor.configPeakCurrentDuration(100);
+    rearRightMotor.configPeakCurrentDuration(100);
+    rearLeftMotor.configPeakCurrentDuration(100);
+
+    frontLeftMotor.configContinuousCurrentLimit(enableLimit);
+    frontRightMotor.configContinuousCurrentLimit(enableLimit);
+    rearRightMotor.configContinuousCurrentLimit(enableLimit);
+    rearLeftMotor.configContinuousCurrentLimit(enableLimit);
+
+    frontLeftMotor.enableCurrentLimit(true);
+    frontRightMotor.enableCurrentLimit(true);
+    rearLeftMotor.enableCurrentLimit(true);
+    rearRightMotor.enableCurrentLimit(true);
+
 
     mDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
@@ -135,9 +157,5 @@ public class MecanumDrivetrain extends SubsystemBase {
     zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
 
     mDrive.driveCartesian(xSpeed, ySpeed, zRotation);
-  }
-
-  public void voltageDrive(double xVolt, double yVolt, double rVolt){
-
   }
 }

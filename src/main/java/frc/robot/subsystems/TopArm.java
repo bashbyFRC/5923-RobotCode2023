@@ -69,7 +69,7 @@ public class TopArm extends SubsystemBase {
     //Upper intake arm
     public void move(double speed) {
         topArmTalon.set(speed);
-        layout.addNumber("Top Arm Voltage", () -> topArmTalon.getBusVoltage());
+        //layout.addNumber("Top Arm Voltage", () -> topArmTalon.getBusVoltage());
     }
 
     public double getTopEncoderPosition() {

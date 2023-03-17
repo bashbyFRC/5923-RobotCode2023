@@ -153,9 +153,9 @@ public class RobotContainer {
     m_tab.add("Auto Chooser", m_chooser)
     .withPosition(0, 6).withSize(5, 2)
     .withWidget(BuiltInWidgets.kSplitButtonChooser);   
-
   }
-  /**
+
+  /**   
    * Use this method to define the default commands of subsystems. 
    * Default commands are ran whenever no other commands are using a specific subsystem.
    */

@@ -22,16 +22,17 @@ public class DriveMecanum extends CommandBase {
    */
 
   private MecanumDrivetrain drivetrain;
-  private Supplier<Double>  x, y, z;
+  private Supplier<Double>  y, x, z;
   private Supplier<Boolean> motorToggle, applyBoost;
   private double error, dt, previousTimestamp, previousError, errorIntegral, errorDerivative;
+  private double multiplier;
   private Supplier<Rotation2d> r;
 
   public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle, Supplier<Boolean> motorToggle, Supplier<Boolean> applyBoost) {
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
-    this.x = forward;
-    this.y = strafe;
+    this.y = forward;
+    this.x = strafe;
     this.z = zRotation;
     this.r = rAngle;
     this.motorToggle = motorToggle;
@@ -45,23 +46,23 @@ public class DriveMecanum extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xSpeed = -x.get();
-    double ySpeed = y.get();
+    double ySpeed = -y.get();
+    double xSpeed = x.get();
     double zRotation = z.get();
     Rotation2d gyroAngle = r.get();
 
     if (applyBoost.get()) {
-      drivetrain.applyBoostMultiplier(BOOST_MULTIPLIER);
+      multiplier = BOOST_MULTIPLIER;
     }
     else {
-      drivetrain.applyBoostMultiplier(1);
+      multiplier = 1;
     }
 
     if (motorToggle.get()) {
       drivetrain.toggleMotorMode(true);
     }
     
-    drivetrain.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle.times(-1));
+    drivetrain.driveCartesian(ySpeed * multiplier, xSpeed, zRotation, gyroAngle.times(-1));
     //drivetrain.driveCartesian(xSpeed, ySpeed, zRotation); // bot-oriented drive
   }
 

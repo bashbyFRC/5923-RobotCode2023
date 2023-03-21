@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class MecanumDrivetrain extends SubsystemBase {
   private WPI_TalonSRX frontRightMotor, rearRightMotor, rearLeftMotor, frontLeftMotor;
+  private WPI_TalonSRX[] motorControllers = {frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor};
   private boolean type;
 
   private MecanumDrive mDrive;
@@ -40,46 +41,34 @@ public class MecanumDrivetrain extends SubsystemBase {
     toggleMotorMode(false);
     type = false;
 
-    // voltage comp
-    frontLeftMotor.configVoltageCompSaturation(12); // "full output" will now scale to 11 Volts for all control modes when enabled.
-    frontLeftMotor.enableVoltageCompensation(true); // turn on/off feature
+    for (int i = 0; i < motorControllers.length; i++) {
+      // voltage comp
+      motorControllers[i].configVoltageCompSaturation(12);  // "full output" will now scale to 11 Volts for all control modes when enabled.
+      motorControllers[i].enableVoltageCompensation(true); // turn on/off feature
 
-    rearLeftMotor.configVoltageCompSaturation(12); 
-    rearLeftMotor.enableVoltageCompensation(true); 
+      // amp limits
+      motorControllers[i].configPeakCurrentLimit(PEAK_LIMIT);
+      motorControllers[i].configPeakCurrentDuration(100);
 
-    frontRightMotor.configVoltageCompSaturation(12); 
-    frontRightMotor.enableVoltageCompensation(true); 
+      motorControllers[i].configContinuousCurrentLimit(ENABLE_LIMIT);
+      motorControllers[i].enableCurrentLimit(true);
 
-    rearRightMotor.configVoltageCompSaturation(12); 
-    rearRightMotor.enableVoltageCompensation(true); 
-
-    //amp limits
-    frontLeftMotor.configPeakCurrentLimit(peakLimit);
-    frontRightMotor.configPeakCurrentLimit(peakLimit);
-    rearRightMotor.configPeakCurrentLimit(peakLimit);
-    rearLeftMotor.configPeakCurrentLimit(peakLimit);
-
-    frontLeftMotor.configPeakCurrentDuration(100);
-    frontRightMotor.configPeakCurrentDuration(100);
-    rearRightMotor.configPeakCurrentDuration(100);
-    rearLeftMotor.configPeakCurrentDuration(100);
-
-    frontLeftMotor.configContinuousCurrentLimit(enableLimit);
-    frontRightMotor.configContinuousCurrentLimit(enableLimit);
-    rearRightMotor.configContinuousCurrentLimit(enableLimit);
-    rearLeftMotor.configContinuousCurrentLimit(enableLimit);
-
-    frontLeftMotor.enableCurrentLimit(true);
-    frontRightMotor.enableCurrentLimit(true);
-    rearLeftMotor.enableCurrentLimit(true);
-    rearRightMotor.enableCurrentLimit(true);
-
+      motorControllers[i].configOpenloopRamp(0.5);
+      motorControllers[i].configOpenloopRamp(1.5);
+    }
 
     mDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
     this.tab = tab;
 
     configureShuffleboardData();
+  }
+
+  public void applyBoostMultiplier(double multiplier) {
+    for (int i = 0; i < motorControllers.length; i++) {
+      motorControllers[i].configPeakCurrentLimit((int)(PEAK_LIMIT * multiplier));
+      motorControllers[i].configContinuousCurrentLimit((int)(ENABLE_LIMIT * multiplier));
+    }
   }
 
   public void toggleMotorMode(boolean typeSwitch) {

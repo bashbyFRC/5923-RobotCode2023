@@ -18,8 +18,8 @@ package frc.robot;
 public final class Constants {
 
     //ampLimits bruh
-    public static int peakLimit = 20;
-    public static int enableLimit = 15;
+    public static int PEAK_LIMIT = 20;
+    public static int ENABLE_LIMIT = 15;
 
     //lift motor
     public static int LIFT_MOTOR = 0;
@@ -54,7 +54,7 @@ public final class Constants {
     public static double ROTATION_DEADBAND = .15;   //.25
     public static double STRAFING_DEADBAND = .15;  //.75
     public static double SPEED_DEADBAND = .15; //.3
-    public static double MAX_OUTPUT = 1;
+    public static double BOOST_MULTIPLIER = 1.2;
 
     // Drivetrain logic
     public static boolean IS_TANKDRIVE_SQUARED = false;
@@ -101,7 +101,7 @@ public final class Constants {
     public static double ARM_KP = 0.0005;
     public static double ARM_KI = 0.00025;
     public static double ARM_KD = 0;
-    public static double ARM_INTEGRAL_TOLERANCE = 250;
+    public static double ARM_INTEGRAL_TOLERANCE = 400;
 
     public static double ARM_IN_SETPOINT = 0;
     public static double ARM_TRANSFER_POINT_SETPOINT = 534;

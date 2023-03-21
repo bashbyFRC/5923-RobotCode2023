@@ -80,7 +80,7 @@ public class RobotContainer {
   private final SimpleAutonomous simpleAuto = new SimpleAutonomous(mecanumDrivetrain, topArm, bottomArm, ahrs);
 
   // Xbox controls
-  private final DriveMecanum drivetrainXbox = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(), ()-> xbox.getRightX(), ()-> ahrs.getRotation2d(), () -> xbox.getBButtonReleased());
+  private final DriveMecanum drivetrainXbox = new DriveMecanum(mecanumDrivetrain, () -> xbox.getLeftY(), ()-> xbox.getLeftX(), ()-> xbox.getRightX(), ()-> ahrs.getRotation2d(), () -> xbox.getBButtonReleased() , () -> xbox.getLeftBumper());
   private final TopArmManual topArmManualXbox = new TopArmManual(topArm, () -> xbox.getAButton(), () -> xbox.getXButton(), () -> xbox.getLeftTriggerAxis(), () -> xbox.getRightTriggerAxis(), () -> xbox.getAButtonReleased(), () -> xbox.getXButtonReleased());
   private final BottomArmManual bottomArmManualXbox = new BottomArmManual(bottomArm, () -> xbox.getPOV());
   private final RobotLift liftXbox = new RobotLift(scissorLift, ()-> xbox.getRightBumper(), ()-> xbox.getLeftBumper());

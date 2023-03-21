@@ -23,12 +23,11 @@ public class DriveMecanum extends CommandBase {
 
   private MecanumDrivetrain drivetrain;
   private Supplier<Double>  x, y, z;
-  private Supplier<Boolean> motorToggle;
-  private boolean homingMode;
+  private Supplier<Boolean> motorToggle, applyBoost;
   private double error, dt, previousTimestamp, previousError, errorIntegral, errorDerivative;
   private Supplier<Rotation2d> r;
 
-  public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle, Supplier<Boolean> motorToggle) {
+  public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle, Supplier<Boolean> motorToggle, Supplier<Boolean> applyBoost) {
     addRequirements(drivetrain);
     this.drivetrain = drivetrain;
     this.x = forward;
@@ -36,13 +35,12 @@ public class DriveMecanum extends CommandBase {
     this.z = zRotation;
     this.r = rAngle;
     this.motorToggle = motorToggle;
+    this.applyBoost = applyBoost;
   }
 
 // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    homingMode = false;
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -50,23 +48,18 @@ public class DriveMecanum extends CommandBase {
     double xSpeed = -x.get();
     double ySpeed = y.get();
     double zRotation = z.get();
-    double angleSetpoint = 0;
     Rotation2d gyroAngle = r.get();
+
+    if (applyBoost.get()) {
+      drivetrain.applyBoostMultiplier(BOOST_MULTIPLIER);
+    }
+    else {
+      drivetrain.applyBoostMultiplier(1);
+    }
 
     if (motorToggle.get()) {
       drivetrain.toggleMotorMode(true);
     }
-
-    /*
-    if (rotate0.get() == true) {
-      homingMode = !homingMode;
-      angleSetpoint = 0;
-    }
-
-    if (homingMode) {
-      zRotation = calculateRotationSpeed(gyroAngle.getDegrees(), angleSetpoint, ROTATE_KP, ROTATE_KI, ROTATE_KD);
-    }
-    */
     
     drivetrain.driveCartesian(xSpeed, ySpeed, zRotation, gyroAngle.times(-1));
     //drivetrain.driveCartesian(xSpeed, ySpeed, zRotation); // bot-oriented drive

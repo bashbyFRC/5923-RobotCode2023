@@ -40,6 +40,10 @@ public class BottomArmAuto extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (extendButton.get()) {
+      
+    }
+
     if (retractArm) { setpointIndex = 0; }
     else if (extendArm) { setpointIndex = 1; }
     else if (feedCone) { setpointIndex = 2; }

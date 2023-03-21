@@ -132,53 +132,33 @@ public class SimpleAutonomous extends CommandBase {
 
   private void timedAutoSequence() {
     switch (phase) {
-      case 1: // move to scoring area
-      if (timer.get() < 2) {
-        drivetrain.driveCartesian(-0.4, 0, 0, ahrs.getRotation2d());
-        topArm.releaseObject(-TOP_INTAKE_SPEED / 2);
-      }
-      else {
-        drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
-        phase++;
-      }
-        break;
-      case 2: // extend arm
-        if (timer.get() < 4) {
+      case 1: // extend arm
+        if (timer.get() < 2) {
           topArm.move(0.4);
-          topArm.releaseObject(-TOP_INTAKE_SPEED);
+          topArm.releaseObject(TOP_INTAKE_SPEED);
         }
         else {
           topArm.move(0);
           phase++;
         }
         break;
-      case 3: // release cone
-        if (timer.get() < 6) {
-          topArm.releaseObject(TOP_INTAKE_SPEED);
+      case 2: // release cone
+        if (timer.get() < 3) {
+          topArm.releaseObject(-TOP_INTAKE_SPEED);
         }
         else {
           topArm.releaseObject(0);
           phase++;
         }
         break;
-      case 4:
-        if (timer.get() < 9) {
-          drivetrain.driveCartesian(0.75, 0, 0, ahrs.getRotation2d());
+      case 3: // drive back, retract arm
+        if (timer.get() < 6) {
+          drivetrain.driveCartesian(0.3, 0, 0, ahrs.getRotation2d());
+          topArm.move(-0.2);
         }
         else {
           drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
-          phase++;
         }
-        break;
-      case 5:
-        if (timer.get() < 11) {
-          topArm.move(-0.3);
-        }
-        else {
-          topArm.move(0);
-          phase++;
-        }
-        break;
       default:
         topArm.move(0);
         topArm.releaseObject(0);

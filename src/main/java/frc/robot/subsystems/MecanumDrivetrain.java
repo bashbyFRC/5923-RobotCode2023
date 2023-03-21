@@ -54,20 +54,20 @@ public class MecanumDrivetrain extends SubsystemBase {
     rearLeftMotor.enableVoltageCompensation(true); 
 
     //amp limits
-    frontLeftMotor.configPeakCurrentLimit(peakLimit);
-    frontRightMotor.configPeakCurrentLimit(peakLimit);
-    rearRightMotor.configPeakCurrentLimit(peakLimit);
-    rearLeftMotor.configPeakCurrentLimit(peakLimit);
+    frontLeftMotor.configPeakCurrentLimit(PEAK_LIMIT);
+    frontRightMotor.configPeakCurrentLimit(PEAK_LIMIT);
+    rearRightMotor.configPeakCurrentLimit(PEAK_LIMIT);
+    rearLeftMotor.configPeakCurrentLimit(PEAK_LIMIT);
 
     frontLeftMotor.configPeakCurrentDuration(500);
     frontRightMotor.configPeakCurrentDuration(500);
     rearRightMotor.configPeakCurrentDuration(500);
     rearLeftMotor.configPeakCurrentDuration(500);
 
-    frontLeftMotor.configContinuousCurrentLimit(enableLimit);
-    frontRightMotor.configContinuousCurrentLimit(enableLimit);
-    rearRightMotor.configContinuousCurrentLimit(enableLimit);
-    rearLeftMotor.configContinuousCurrentLimit(enableLimit);
+    frontLeftMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
+    frontRightMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
+    rearRightMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
+    rearLeftMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
 
     frontLeftMotor.enableCurrentLimit(true);
     frontRightMotor.enableCurrentLimit(true);

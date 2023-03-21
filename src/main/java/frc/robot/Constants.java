@@ -18,8 +18,8 @@ package frc.robot;
 public final class Constants {
 
     //ampLimits bruh
-    public static int PEAK_LIMIT = 20;
-    public static int ENABLE_LIMIT = 15;
+    public static int peakLimit = 35;
+    public static int enableLimit = 20;
 
     //lift motor
     public static int LIFT_MOTOR = 0;

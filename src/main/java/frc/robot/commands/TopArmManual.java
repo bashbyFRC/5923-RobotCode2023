@@ -36,12 +36,12 @@ public class TopArmManual extends CommandBase {
         double armSpeed = extend.get() - retract.get();
 
         if (cubeIntake.get()) {
-            topArm.releaseObject(-0.75);
+            topArm.releaseObject(-.75);
             holdCone = false;
             holdCube = false;
         }
         else if (coneIntake.get()) {
-            topArm.releaseObject(0.75);
+            topArm.releaseObject(.75);
             holdCone = false;
             holdCube = false;
         }
@@ -55,10 +55,10 @@ public class TopArmManual extends CommandBase {
         }
 
         if (holdCube && holdToggle) {
-            topArm.releaseObject(-.25);
+            topArm.releaseObject(-.5);
         }
         else if (holdCone && holdToggle) {
-            topArm.releaseObject(.25);
+            topArm.releaseObject(.75);
         }
         else {
             topArm.releaseObject(0);

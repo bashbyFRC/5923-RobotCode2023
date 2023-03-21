@@ -26,6 +26,6 @@ public class ScissorLift extends SubsystemBase {
     }
 
     public void lift(double speed){
-        //liftMotor.set(speed);
+        liftMotor.set(speed);
     }
 }

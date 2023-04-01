@@ -116,7 +116,7 @@ public class RobotContainer {
     Shuffleboard.selectTab(m_tab.getTitle());
     
     m_chooser.setDefaultOption("Basic Autonomous Sequence", simpleAuto);
-    m_chooser.addOption("Automatic autonomous", pidAuto);
+    //m_chooser.addOption("Automatic autonomous", pidAuto);
 
     ShuffleboardLayout drivingStyleLayout = m_tab.getLayout("driving styles", BuiltInLayouts.kList)
     .withPosition(0, 0).withSize(2, 2)
@@ -127,10 +127,6 @@ public class RobotContainer {
     drivingStyleLayout.add("Logitech Field Drive",
     new InstantCommand(() -> mecanumDrivetrain.setDefaultCommand(drivetrainXbox), mecanumDrivetrain));
  
-    ShuffleboardLayout topArmCommand = m_tab.getLayout("Top Arm Command", BuiltInLayouts.kList);
-    topArmCommand.add("Manual Mode", new InstantCommand(() -> topArm.setDefaultCommand(topArmManualXbox), topArm));
-    topArmCommand.add("PID Mode", new InstantCommand(() -> topArm.setDefaultCommand(topArmAutoXbox), topArm));
-
     ShuffleboardLayout mecanumSensor = m_tab.getLayout("NavX", BuiltInLayouts.kGrid)
     .withPosition(2, 0).withSize(1, 3)
     .withProperties(Map.of("label position", "BOTTOM"));

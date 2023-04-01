@@ -8,6 +8,7 @@ import static frc.robot.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.fasterxml.jackson.databind.ser.std.StdArraySerializers.FloatArraySerializer;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -24,8 +25,8 @@ public class BottomArm extends SubsystemBase {
   private double innerSetpoint, outerSetpoint;
   private boolean setpointReached;
 
-  private Encoder innerSegEncoder = new Encoder(BOTTOM_INNER_ENCODER_PORT_A, BOTTOM_INNER_ENCODER_PORT_B, false, EncodingType.k2X);
-  private Encoder outerSegEncoder = new Encoder(BOTTOM_OUTER_ENCODER_PORT_A, BOTTOM_OUTER_ENCODER_PORT_B, true, EncodingType.k2X);
+  private Encoder innerSegEncoder = new Encoder(BOTTOM_INNER_ENCODER_PORT_A, BOTTOM_INNER_ENCODER_PORT_B, true, EncodingType.k2X);
+  private Encoder outerSegEncoder = new Encoder(BOTTOM_OUTER_ENCODER_PORT_A, BOTTOM_OUTER_ENCODER_PORT_B, false, EncodingType.k2X);
   private boolean feedCone;
 
   /** Creates a new BottomArm. */
@@ -34,6 +35,9 @@ public class BottomArm extends SubsystemBase {
     innerSegMotor = new WPI_TalonSRX(INNER_SEG_MOTOR_ID);
 
     innerSegMotor.setInverted(true);
+
+    innerSegEncoder.setDistancePerPulse(1 / (INNER_SEG_DIAMETER * Math.PI));
+    outerSegEncoder.setDistancePerPulse(1 / (OUTER_SEG_DIAMETER * Math.PI));
 
     outerSegMotor.setNeutralMode(NeutralMode.Brake);
     innerSegMotor.setNeutralMode(NeutralMode.Brake);

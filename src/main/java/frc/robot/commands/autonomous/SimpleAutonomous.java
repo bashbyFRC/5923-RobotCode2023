@@ -51,18 +51,17 @@ public class SimpleAutonomous extends CommandBase {
   private void timedAutoSequence() {
     switch (phase) {
       case 1: // extend arm
-        if (timer.get() < 2) {
-          topArm.move(0.4);
-          topArm.releaseObject(TOP_INTAKE_SPEED);
+        if (timer.get() < 3) {
+          topArm.move(0.35);
         }
         else {
           topArm.move(0);
           phase++;
         }
         break;
-      case 2: // release cone
-        if (timer.get() < 3) {
-          topArm.releaseObject(-TOP_INTAKE_SPEED);
+      case 2: // release cube
+        if (timer.get() < 4) {
+          topArm.releaseObject(TOP_INTAKE_SPEED);
         }
         else {
           topArm.releaseObject(0);
@@ -71,18 +70,19 @@ public class SimpleAutonomous extends CommandBase {
         break;
       case 3: // drive back, retract arm
         if (timer.get() < 6) {
-          drivetrain.driveCartesian(0.3, 0, 0, ahrs.getRotation2d());
-          topArm.move(-0.2);
+          drivetrain.driveCartesian(0.75, 0, 0, ahrs.getRotation2d());
+          topArm.move(-0.28);
         }
         else {
           drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
+          phase++;
         }
+        break;
       default:
         topArm.move(0);
         topArm.releaseObject(0);
-        drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
+      }
     }
-  }
   
 
 

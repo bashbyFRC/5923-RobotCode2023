@@ -17,8 +17,8 @@ package frc.robot;
  */
 public final class Constants {
     // Amp limits
-    public static int PEAK_LIMIT = 35;
-    public static int ENABLE_LIMIT = 20;
+    public static int PEAK_LIMIT = 40;
+    public static int ENABLE_LIMIT = 30;
 
     // Scissor lift motor
     public static int LIFT_MOTOR = 0;
@@ -30,6 +30,10 @@ public final class Constants {
         public static double COUNTS_PER_ROTATION = 4096;
         public static double WHEEL_DIAMETER = 6;
         public static double DISTANCE_PER_PULSE = ((Math.PI * WHEEL_DIAMETER) / COUNTS_PER_ROTATION) / 39.37;
+
+        // Bottom arm
+        public static double INNER_SEG_DIAMETER = 6; //in
+        public static double OUTER_SEG_DIAMETER = 16; //in
 
     // PID CONSTANTS
         // Bottom arm

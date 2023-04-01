@@ -30,6 +30,7 @@ public class MecanumDrivetrain extends SubsystemBase {
 
   private MecanumDrive mDrive;
   private ShuffleboardTab tab;
+  private double phase;
 
   public MecanumDrivetrain(ShuffleboardTab tab) {
     // Motor controllers
@@ -46,53 +47,6 @@ public class MecanumDrivetrain extends SubsystemBase {
     toggleMotorMode(false);
     coastMode = false;
 
-      // voltage comp
-    frontRightMotor.configVoltageCompSaturation(12); // "full output" will now scale to 12 Volts for all control modes when enabled.
-    frontRightMotor.enableVoltageCompensation(true);  // turn on/off feature
-
-    rearRightMotor.configVoltageCompSaturation(12); 
-    rearRightMotor.enableVoltageCompensation(true); 
-
-    frontLeftMotor.configVoltageCompSaturation(12); 
-    frontLeftMotor.enableVoltageCompensation(true); 
-
-    rearLeftMotor.configVoltageCompSaturation(12); 
-    rearLeftMotor.enableVoltageCompensation(true); 
-
-    //amp limits
-    frontLeftMotor.configPeakCurrentLimit(PEAK_LIMIT);
-    frontRightMotor.configPeakCurrentLimit(PEAK_LIMIT);
-    rearRightMotor.configPeakCurrentLimit(PEAK_LIMIT);
-    rearLeftMotor.configPeakCurrentLimit(PEAK_LIMIT);
-
-    frontLeftMotor.configPeakCurrentDuration(250);
-    frontRightMotor.configPeakCurrentDuration(250);
-    rearRightMotor.configPeakCurrentDuration(250);
-    rearLeftMotor.configPeakCurrentDuration(250);
-
-    frontLeftMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
-    frontRightMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
-    rearRightMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
-    rearLeftMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
-
-    frontLeftMotor.enableCurrentLimit(true);
-    frontRightMotor.enableCurrentLimit(true);
-    rearLeftMotor.enableCurrentLimit(true);
-    rearRightMotor.enableCurrentLimit(true);
-
-    //ramp rate
-    frontLeftMotor.configOpenloopRamp(0.1);
-    frontLeftMotor.configClosedloopRamp(1.5);
-
-    frontRightMotor.configOpenloopRamp(0.1);
-    frontRightMotor.configClosedloopRamp(1.5);
-
-    rearLeftMotor.configOpenloopRamp(0.1);
-    rearLeftMotor.configClosedloopRamp(1.5);
-
-    rearRightMotor.configOpenloopRamp(0.1);
-    rearRightMotor.configClosedloopRamp(1.5);
-
     mDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
     this.tab = tab;
@@ -101,6 +55,10 @@ public class MecanumDrivetrain extends SubsystemBase {
   }
 
   public void applyBoostMultiplier(double multiplier) {
+  }
+
+  public void feedPhase(double phase) {
+    this.phase = phase;
   }
 
   public void toggleMotorMode(boolean modeSwitch) {
@@ -137,6 +95,7 @@ public class MecanumDrivetrain extends SubsystemBase {
     //
     layout.addNumber("Rear Right Encoder Pos", () -> getRearRightEncoderPosition());
     //layout.addNumber("Rear Right Encoder Vel", () -> getRearRightEncoderVelocity());
+    layout.addNumber("phase", () -> phase);
 
     layout.addBoolean("Coast Mode", () -> coastMode);
   }
@@ -145,6 +104,55 @@ public class MecanumDrivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     mDrive.feed();
+  }
+
+  public void configureMotorPower() {
+    // voltage comp
+    frontRightMotor.configVoltageCompSaturation(12); // "full output" will now scale to 12 Volts for all control modes when enabled.
+    frontRightMotor.enableVoltageCompensation(true);  // turn on/off feature
+
+    rearRightMotor.configVoltageCompSaturation(12); 
+    rearRightMotor.enableVoltageCompensation(true); 
+
+    frontLeftMotor.configVoltageCompSaturation(12); 
+    frontLeftMotor.enableVoltageCompensation(true); 
+
+    rearLeftMotor.configVoltageCompSaturation(12); 
+    rearLeftMotor.enableVoltageCompensation(true); 
+
+    //amp limits
+    frontLeftMotor.configPeakCurrentLimit(PEAK_LIMIT);
+    frontRightMotor.configPeakCurrentLimit(PEAK_LIMIT);
+    rearRightMotor.configPeakCurrentLimit(PEAK_LIMIT);
+    rearLeftMotor.configPeakCurrentLimit(PEAK_LIMIT);
+
+    frontLeftMotor.configPeakCurrentDuration(150);
+    frontRightMotor.configPeakCurrentDuration(150);
+    rearRightMotor.configPeakCurrentDuration(150);
+    rearLeftMotor.configPeakCurrentDuration(150);
+
+    frontLeftMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
+    frontRightMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
+    rearRightMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
+    rearLeftMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
+
+    frontLeftMotor.enableCurrentLimit(true);
+    frontRightMotor.enableCurrentLimit(true);
+    rearLeftMotor.enableCurrentLimit(true);
+    rearRightMotor.enableCurrentLimit(true);
+
+    //ramp rate
+    frontLeftMotor.configOpenloopRamp(0.1);
+    //frontLeftMotor.configClosedloopRamp(1.5);
+
+    frontRightMotor.configOpenloopRamp(0.1);
+    //frontRightMotor.configClosedloopRamp(1.5);
+
+    rearLeftMotor.configOpenloopRamp(0.1);
+    //rearLeftMotor.configClosedloopRamp(1.5);
+
+    rearRightMotor.configOpenloopRamp(0.1);
+    //rearRightMotor.configClosedloopRamp(1.5);
   }
 
   public void resetEncoderPositions() {
@@ -181,5 +189,12 @@ public class MecanumDrivetrain extends SubsystemBase {
     zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
 
     mDrive.driveCartesian(xSpeed, ySpeed, zRotation);
+  }
+
+  public void tankDrive(double xSpeed) {
+    frontLeftMotor.set(xSpeed);
+    frontRightMotor.set(xSpeed);
+    rearLeftMotor.set(xSpeed);
+    rearRightMotor.set(xSpeed);
   }
 }

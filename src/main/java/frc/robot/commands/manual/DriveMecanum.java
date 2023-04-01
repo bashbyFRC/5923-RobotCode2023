@@ -44,6 +44,7 @@ public class DriveMecanum extends CommandBase {
   @Override
   public void initialize() {
     boostSwitch = false;
+    drivetrain.configureMotorPower();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

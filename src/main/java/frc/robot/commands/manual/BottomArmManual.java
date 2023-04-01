@@ -1,6 +1,6 @@
-package frc.robot.commands;
+package frc.robot.commands.manual;
 
-import static frc.robot.Constants.BOTTOM_ARM_SPEED;
+import static frc.robot.Constants.*;
 
 import java.util.function.Supplier;
 

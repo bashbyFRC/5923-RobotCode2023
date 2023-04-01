@@ -1,0 +1,14 @@
+/BEGINNING/
+Hello! Welcome reader! Hopefully you have coded before, because this
+is going to be a challenging adventure. 
+This document was written with the purpose of guiding the reader through the ins and outs of the code,
+and every nuance that we know of.
+
+/IMPORTANT INFORMATION/
+The very first thing we recommend you do is go to docs.wpilib.org/en/stable/index.html
+This the FRC and WPILIB reference website. 
+This website contains a bunch of useful guides, tips and tricks, and example code that will be 
+very helpful for troubleshooting and implementing code you write into the overall structure of the code.
+Use it if this guide doesn't contain the specific answer you need.
+
+/STARTING OF THE CODE/

@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.manual;
 
 import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -24,8 +24,7 @@ public class RobotLift extends CommandBase {
     public void execute() {
 
         if(up.get()) {lift.lift(.5); }
-        if(down.get()) {lift.lift(-.5); }
-        if(up.get() == false && down.get() == false) { lift.lift(0.0); }
+        if(up.get() == false) { lift.lift(0.0); }
     }
 
     public void end(boolean interrupted) {

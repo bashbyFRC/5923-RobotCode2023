@@ -44,6 +44,8 @@ public class TopArm extends SubsystemBase {
 
         topEncoder.setDistancePerPulse(TOP_ARM_DISTANCE_PER_PULSE);
         topEncoder.setMinRate(0.1);
+
+        // ADD IN AMP LIMITS
     }
 
     private void configureShuffleboardData() {

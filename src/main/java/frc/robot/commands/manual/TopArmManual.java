@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.manual;
 
 import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -58,7 +58,7 @@ public class TopArmManual extends CommandBase {
             topArm.releaseObject(-.5);
         }
         else if (holdCone && holdToggle) {
-            topArm.releaseObject(.75);
+            topArm.releaseObject(.65);
         }
         else {
             topArm.releaseObject(0);
@@ -70,7 +70,7 @@ public class TopArmManual extends CommandBase {
         }
         */
 
-        topArm.move(armSpeed);
+        topArm.move(armSpeed * .5);
     }
 
     public void end(boolean interrupted) {

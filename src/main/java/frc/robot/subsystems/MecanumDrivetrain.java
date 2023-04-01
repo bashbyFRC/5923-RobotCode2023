@@ -7,6 +7,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
+import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -16,14 +19,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class MecanumDrivetrain extends SubsystemBase {
   private WPI_TalonSRX frontRightMotor, rearRightMotor, rearLeftMotor, frontLeftMotor;
-  private boolean type;
+  private boolean coastMode;
+
+  Translation2d frontLeftLocation = new Translation2d(CENTER_TO_WHEEL_X, CENTER_TO_WHEEL_Y);
+  Translation2d frontRightLocation = new Translation2d(CENTER_TO_WHEEL_X, -CENTER_TO_WHEEL_Y);
+  Translation2d backLeftLocation = new Translation2d(-CENTER_TO_WHEEL_X, CENTER_TO_WHEEL_Y);
+  Translation2d backRightLocation = new Translation2d(-CENTER_TO_WHEEL_X, -CENTER_TO_WHEEL_Y);
+
+  MecanumDriveKinematics m_kinematics = new MecanumDriveKinematics(frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation);
 
   private MecanumDrive mDrive;
   private ShuffleboardTab tab;
-
-  private double cpr = 4096;
-  private double whd = 6;
-  private double distancePerPulse = ((Math.PI * whd) / cpr) / 12;
 
   public MecanumDrivetrain(ShuffleboardTab tab) {
     // Motor controllers
@@ -38,9 +44,9 @@ public class MecanumDrivetrain extends SubsystemBase {
     rearRightMotor.setInverted(true);
     
     toggleMotorMode(false);
-    type = false;
+    coastMode = false;
 
-    // voltage comp
+      // voltage comp
     frontRightMotor.configVoltageCompSaturation(12); // "full output" will now scale to 12 Volts for all control modes when enabled.
     frontRightMotor.enableVoltageCompensation(true);  // turn on/off feature
 
@@ -59,10 +65,10 @@ public class MecanumDrivetrain extends SubsystemBase {
     rearRightMotor.configPeakCurrentLimit(PEAK_LIMIT);
     rearLeftMotor.configPeakCurrentLimit(PEAK_LIMIT);
 
-    frontLeftMotor.configPeakCurrentDuration(500);
-    frontRightMotor.configPeakCurrentDuration(500);
-    rearRightMotor.configPeakCurrentDuration(500);
-    rearLeftMotor.configPeakCurrentDuration(500);
+    frontLeftMotor.configPeakCurrentDuration(250);
+    frontRightMotor.configPeakCurrentDuration(250);
+    rearRightMotor.configPeakCurrentDuration(250);
+    rearLeftMotor.configPeakCurrentDuration(250);
 
     frontLeftMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
     frontRightMotor.configContinuousCurrentLimit(ENABLE_LIMIT);
@@ -75,17 +81,17 @@ public class MecanumDrivetrain extends SubsystemBase {
     rearRightMotor.enableCurrentLimit(true);
 
     //ramp rate
-    frontLeftMotor.configOpenloopRamp(0.5);
-    frontLeftMotor.configOpenloopRamp(1.5);
+    frontLeftMotor.configOpenloopRamp(0.1);
+    frontLeftMotor.configClosedloopRamp(1.5);
 
-    frontRightMotor.configOpenloopRamp(0.5);
-    frontRightMotor.configOpenloopRamp(1.5);
+    frontRightMotor.configOpenloopRamp(0.1);
+    frontRightMotor.configClosedloopRamp(1.5);
 
-    rearLeftMotor.configOpenloopRamp(0.5);
-    rearLeftMotor.configOpenloopRamp(1.5);
+    rearLeftMotor.configOpenloopRamp(0.1);
+    rearLeftMotor.configClosedloopRamp(1.5);
 
-    rearRightMotor.configOpenloopRamp(0.5);
-    rearRightMotor.configOpenloopRamp(1.5);
+    rearRightMotor.configOpenloopRamp(0.1);
+    rearRightMotor.configClosedloopRamp(1.5);
 
     mDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
@@ -97,11 +103,11 @@ public class MecanumDrivetrain extends SubsystemBase {
   public void applyBoostMultiplier(double multiplier) {
   }
 
-  public void toggleMotorMode(boolean typeSwitch) {
-    if (typeSwitch) {
-      type = !type;
+  public void toggleMotorMode(boolean modeSwitch) {
+    if (modeSwitch) {
+      coastMode = !coastMode;
     }
-    if (type) {//coast mode
+    if (coastMode) {//coast mode
       frontLeftMotor.setNeutralMode(NeutralMode.Coast);
       frontRightMotor.setNeutralMode(NeutralMode.Coast);
       rearLeftMotor.setNeutralMode(NeutralMode.Coast);
@@ -132,7 +138,7 @@ public class MecanumDrivetrain extends SubsystemBase {
     layout.addNumber("Rear Right Encoder Pos", () -> getRearRightEncoderPosition());
     //layout.addNumber("Rear Right Encoder Vel", () -> getRearRightEncoderVelocity());
 
-    layout.addBoolean("Coast Mode", () -> type);
+    layout.addBoolean("Coast Mode", () -> coastMode);
   }
   
   @Override
@@ -148,10 +154,10 @@ public class MecanumDrivetrain extends SubsystemBase {
     rearRightMotor.setSelectedSensorPosition(0);
   }
 
-  public double getFrontLeftEncoderPosition() { return frontLeftMotor.getSelectedSensorPosition() * distancePerPulse; }
-  public double getRearLeftEncoderPosition() { return rearLeftMotor.getSelectedSensorPosition() * distancePerPulse; }
-  public double getFrontRightEncoderPosition() { return frontRightMotor.getSelectedSensorPosition() * distancePerPulse; }
-  public double getRearRightEncoderPosition() { return rearRightMotor.getSelectedSensorPosition() * distancePerPulse; }
+  public double getFrontLeftEncoderPosition() { return frontLeftMotor.getSelectedSensorPosition() * DISTANCE_PER_PULSE; }
+  public double getRearLeftEncoderPosition() { return rearLeftMotor.getSelectedSensorPosition() * DISTANCE_PER_PULSE; }
+  public double getFrontRightEncoderPosition() { return frontRightMotor.getSelectedSensorPosition() * DISTANCE_PER_PULSE; }
+  public double getRearRightEncoderPosition() { return rearRightMotor.getSelectedSensorPosition() * DISTANCE_PER_PULSE; }
   //public double getFrontLeftEncoderVelocity() { return frontLeftMotor.getSelectedSensorVelocity(); }
   //public double getFrontRightEncoderVelocity() { return frontRightMotor.getSelectedSensorVelocity(); }
   //public double getRearLeftEncoderVelocity() { return rearLeftMotor.getSelectedSensorVelocity(); }
@@ -161,6 +167,9 @@ public class MecanumDrivetrain extends SubsystemBase {
     forward = MathUtil.applyDeadband(forward, SPEED_DEADBAND);
     side = MathUtil.applyDeadband(side, SPEED_DEADBAND);
     zRotation = MathUtil.applyDeadband(zRotation, ROTATION_DEADBAND);
+    zRotation = zRotation * .55;
+    forward = forward * BOOST_MULTIPLIER;
+    side = side * BOOST_MULTIPLIER;
 
     mDrive.driveCartesian(forward, side, zRotation, gyroAngle);
   }

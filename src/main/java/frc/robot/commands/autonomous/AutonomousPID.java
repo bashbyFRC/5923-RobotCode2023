@@ -2,7 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
+
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -12,9 +14,7 @@ import frc.robot.subsystems.TopArm;
 
 import static frc.robot.Constants.*;
 
-import com.kauailabs.navx.frc.AHRS;
-
-public class SimpleAutonomous extends CommandBase {
+public class AutonomousPID extends CommandBase {
   private double error, dt, errorDerivative, previousTimestamp, previousError, errorIntegral;
   private double lastWorldLinearAccelX, lastWorldLinearAccelY;
   private double armMotorOutput, forwardOutput, rotation;
@@ -25,8 +25,8 @@ public class SimpleAutonomous extends CommandBase {
   private AHRS ahrs;
   private Timer timer = new Timer();
 
-  /** Creates a new SimpleAutonomous. */
-  public SimpleAutonomous(MecanumDrivetrain drivetrain, TopArm topArm, BottomArm bottomArm, AHRS gyroscope) {
+  /** Creates a new AutonomousPID. */
+  public AutonomousPID(MecanumDrivetrain drivetrain, TopArm topArm, BottomArm bottomArm, AHRS gyroscope) {
     addRequirements(drivetrain, topArm, bottomArm);
     this.drivetrain = drivetrain;
     this.topArm = topArm;
@@ -34,7 +34,6 @@ public class SimpleAutonomous extends CommandBase {
     this.ahrs = gyroscope;
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     phase = 1;
@@ -44,7 +43,7 @@ public class SimpleAutonomous extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    timedAutoSequence();
+    pidAutoSequence();
   }
 
   // Called once the command ends or is interrupted.
@@ -129,44 +128,6 @@ public class SimpleAutonomous extends CommandBase {
         drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
     }
   }
-
-  private void timedAutoSequence() {
-    switch (phase) {
-      case 1: // extend arm
-        if (timer.get() < 2) {
-          topArm.move(0.4);
-          topArm.releaseObject(TOP_INTAKE_SPEED);
-        }
-        else {
-          topArm.move(0);
-          phase++;
-        }
-        break;
-      case 2: // release cone
-        if (timer.get() < 3) {
-          topArm.releaseObject(-TOP_INTAKE_SPEED);
-        }
-        else {
-          topArm.releaseObject(0);
-          phase++;
-        }
-        break;
-      case 3: // drive back, retract arm
-        if (timer.get() < 6) {
-          drivetrain.driveCartesian(0.3, 0, 0, ahrs.getRotation2d());
-          topArm.move(-0.2);
-        }
-        else {
-          drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
-        }
-      default:
-        topArm.move(0);
-        topArm.releaseObject(0);
-        drivetrain.driveCartesian(0, 0, 0, ahrs.getRotation2d());
-    }
-  }
-  
-
 
   // Returns true when the command should end.
   @Override

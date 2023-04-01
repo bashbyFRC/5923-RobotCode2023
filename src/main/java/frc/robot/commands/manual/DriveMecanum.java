@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.manual;
 
 import java.util.function.Supplier;
 
@@ -27,6 +27,7 @@ public class DriveMecanum extends CommandBase {
   private double error, dt, previousTimestamp, previousError, errorIntegral, errorDerivative;
   private double multiplier;
   private Supplier<Rotation2d> r;
+  private boolean boostSwitch;
 
   public DriveMecanum(MecanumDrivetrain drivetrain, Supplier<Double> forward, Supplier<Double> strafe, Supplier<Double> zRotation, Supplier<Rotation2d> rAngle, Supplier<Boolean> motorToggle, Supplier<Boolean> applyBoost) {
     addRequirements(drivetrain);
@@ -35,13 +36,15 @@ public class DriveMecanum extends CommandBase {
     this.x = strafe;
     this.z = zRotation;
     this.r = rAngle;
-    this.motorToggle = motorToggle;
-    this.applyBoost = applyBoost;
+    this.motorToggle = motorToggle; // toggle
+    this.applyBoost = applyBoost; // toggle
   }
 
 // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    boostSwitch = false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -52,6 +55,10 @@ public class DriveMecanum extends CommandBase {
     Rotation2d gyroAngle = r.get();
 
     if (applyBoost.get()) {
+      boostSwitch = !boostSwitch;
+    }
+
+    if (boostSwitch) {
       multiplier = BOOST_MULTIPLIER;
     }
     else {
@@ -62,7 +69,7 @@ public class DriveMecanum extends CommandBase {
       drivetrain.toggleMotorMode(true);
     }
     
-    drivetrain.driveCartesian(ySpeed * multiplier, xSpeed, zRotation, gyroAngle.times(-1));
+    drivetrain.driveCartesian(ySpeed * multiplier, xSpeed * multiplier, zRotation, gyroAngle.times(-1));
     //drivetrain.driveCartesian(xSpeed, ySpeed, zRotation); // bot-oriented drive
   }
 

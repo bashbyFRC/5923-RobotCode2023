@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -14,6 +16,7 @@ public class ScissorLift extends SubsystemBase {
     public ScissorLift(ShuffleboardTab tab){
 
         liftMotor = new WPI_VictorSPX(LIFT_MOTOR);
+        liftMotor.setNeutralMode(NeutralMode.Brake);
         this.tab = tab;
         configureShuffleboardData();
     }
